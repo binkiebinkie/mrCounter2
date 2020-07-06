@@ -1,42 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { CountersContext } from "./state/CountersContext";
-import { guidGenerator } from "./helpers";
-import { ThemeProvider } from "react-native-elements";
-import { withTheme } from "react-native-elements";
-import { storeData, getData } from "./storage";
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, SafeAreaView} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {CountersContext} from './state/CountersContext';
+import {guidGenerator} from './helpers';
+import {ThemeProvider} from 'react-native-elements';
+import {withTheme} from 'react-native-elements';
+import {storeData, getData} from './storage';
 
-import HomeScreen from "./screens/HomeScreen";
-import CountersScreen from "./screens/CountersScreen";
-import SettingsScreen from "./screens/SettingsScreen";
+import HomeScreen from './screens/HomeScreen';
+import CountersScreen from './screens/CountersScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 const Stack = createStackNavigator();
 
 const theme = {
   colors: {
-    primary: "#EAE6E1",
-    Beige1: "#EAE6E1",
+    primary: '#EAE6E1',
+    Beige1: '#EAE6E1',
 
-    Grey1: "#4D4D4D",
-    Grey2: "#69696C",
-    Grey3: "#979797",
-    Grey4: "#DCDCDB",
-    LightGrey: "#F2F3F3",
-    Black: "#2B2C2E",
-    Darkest: "#211E1E",
-    PureWhite: "#FFFFFF",
+    Grey1: '#4D4D4D',
+    Grey2: '#69696C',
+    Grey3: '#979797',
+    Grey4: '#DCDCDB',
+    LightGrey: '#F2F3F3',
+    Black: '#2B2C2E',
+    Darkest: '#211E1E',
+    PureWhite: '#FFFFFF',
 
-    DeepBeige: "#897A5E",
-    DarkBeige: "#AAA191",
+    DeepBeige: '#897A5E',
+    DarkBeige: '#AAA191',
 
-    Green: "#3AC34F",
+    Green: '#3AC34F',
 
-    Blue: "#1681FF",
-    MidBlue: "#88BFFF",
-    LightBlue: "#E8F2FF"
-  }
+    Blue: '#1681FF',
+    MidBlue: '#88BFFF',
+    LightBlue: '#E8F2FF',
+  },
 };
 
 //rsf
@@ -48,45 +48,8 @@ function Main(props) {
   useEffect(() => {
     async function fetchData() {
       const storageState = await getData().catch(err => console.log(err));
-      const { numSelCounters, counters, settings } = storageState;
+      const {numSelCounters, counters, settings} = storageState;
 
-      // const textCounters = [
-      //   ...counters,
-      //   {
-      //     title: `Test counter`,
-      //     count: 100,
-      //     id: guidGenerator(),
-      //     selected: false,
-      //     incrementAmount: 1,
-      //     selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
-      //   },
-      //   {
-      //     title: `Test counter`,
-      //     count: 1000,
-      //     id: guidGenerator(),
-      //     selected: false,
-      //     incrementAmount: 1,
-      //     selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
-      //   },
-      //   {
-      //     title: `Test counter`,
-      //     count: 10000,
-      //     id: guidGenerator(),
-      //     selected: false,
-      //     incrementAmount: 1,
-      //     selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
-      //   },
-      //   {
-      //     title: `Test counter`,
-      //     count: 1000000,
-      //     id: guidGenerator(),
-      //     selected: false,
-      //     incrementAmount: 1,
-      //     selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
-      //   }
-      // ];
-
-      // setCounters(textCounters ? textCounters : counters);
       setCounters(counters);
       setNumSelCounters(numSelCounters);
       setSettings(
@@ -94,35 +57,35 @@ function Main(props) {
           ? settings
           : [
               {
-                id: "darkMode",
-                title: "Dark Mode",
+                id: 'darkMode',
+                title: 'Dark Mode',
                 selected: false,
-                description: "Makes the UI dark.",
+                description: 'Makes the UI dark.',
 
-                selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
+                selectedSlant: Math.random() > 0.5 ? '-1deg' : '1deg',
               },
               {
-                id: "keepScreenOn",
-                title: "Keep Screen On",
+                id: 'keepScreenOn',
+                title: 'Keep Screen On',
                 selected: false,
-                description: "For dabbling counters.",
-                selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
+                description: 'For dabbling counters.',
+                selectedSlant: Math.random() > 0.5 ? '-1deg' : '1deg',
               },
               {
-                id: "leftHanded",
-                title: "Left Handed",
+                id: 'leftHanded',
+                title: 'Left Handed',
                 selected: false,
-                description: "Moves buttons to the left.",
-                selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
+                description: 'Moves buttons to the left.',
+                selectedSlant: Math.random() > 0.5 ? '-1deg' : '1deg',
               },
               {
-                id: "flirting",
-                title: "Flirting",
+                id: 'flirting',
+                title: 'Flirting',
                 selected: false,
                 description: "Don't you dare turn me on.",
-                selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
-              }
-            ]
+                selectedSlant: Math.random() > 0.5 ? '-1deg' : '1deg',
+              },
+            ],
       );
     }
     fetchData();
@@ -134,7 +97,7 @@ function Main(props) {
     await storeData({
       counters,
       numSelCounters,
-      settings
+      settings,
     });
 
   // ensure number of selected state is accurate
@@ -142,7 +105,7 @@ function Main(props) {
     let numSelected = [];
 
     counters.forEach(counter =>
-      counter.selected === true ? numSelected.push(counter.id) : null
+      counter.selected === true ? numSelected.push(counter.id) : null,
     );
     setNumSelCounters(numSelected);
     saveToStorage();
@@ -156,7 +119,7 @@ function Main(props) {
       id: guidGenerator(),
       selected: false,
       incrementAmount: 1,
-      selectedSlant: Math.random() > 0.5 ? "-1deg" : "1deg"
+      selectedSlant: Math.random() > 0.5 ? '-1deg' : '1deg',
     };
 
     setCounters([...counters, newCounter]);
@@ -167,7 +130,7 @@ function Main(props) {
     const newCounters = [...counters];
 
     const removeSelectedArray = newCounters.filter(
-      counter => !counter.selected
+      counter => !counter.selected,
     );
 
     setCounters(removeSelectedArray);
@@ -175,13 +138,15 @@ function Main(props) {
 
   // find counter or setting by id then toggle selected state
   const toggleSelect = (id, isCounter) => {
+    console.log(id, isCounter);
     const arrToMap = isCounter ? counters : settings;
     const newArr = arrToMap.map((obj, i) => {
       if (obj.id !== id) return obj;
-      const newObj = { ...obj };
+      const newObj = {...obj};
       newObj.selected = !obj.selected;
       return newObj;
     });
+    console.log('newARR', newArr);
     if (isCounter) {
       setCounters(newArr);
     } else {
@@ -193,7 +158,7 @@ function Main(props) {
   const editCounter = (id, key, value) => {
     const newCounters = [...counters];
     const indexOfCounter = newCounters.findIndex(counter => counter.id === id);
-    const newCounter = { ...counters[indexOfCounter] };
+    const newCounter = {...counters[indexOfCounter]};
     newCounter[key] = value;
 
     newCounters[indexOfCounter] = newCounter;
@@ -213,26 +178,25 @@ function Main(props) {
           toggleSelect,
           editCounter,
           settings,
-          setSettings
-        }}
-      >
+          setSettings,
+        }}>
         <NavigationContainer>
           <SafeAreaView style={styles.container(theme)}>
             <Stack.Navigator>
               <Stack.Screen
                 name="Home"
                 component={HomeScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="Counters"
                 component={CountersScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="Settings"
                 component={SettingsScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
             </Stack.Navigator>
           </SafeAreaView>
@@ -245,11 +209,11 @@ function Main(props) {
 const styles = StyleSheet.create({
   container: theme => ({
     flex: 1,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "red"
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'red',
     // backgroundColor: theme.colors.Black
-  })
+  }),
 });
 
 export default withTheme(Main);

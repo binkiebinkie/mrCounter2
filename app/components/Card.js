@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, {useContext, useState, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,24 +6,24 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Switch,
-  TextInput
-} from "react-native";
+  TextInput,
+} from 'react-native';
 
-import { withTheme } from "react-native-elements";
-import { CountersContext } from "../state/CountersContext";
+import {withTheme} from 'react-native-elements';
+import {CountersContext} from '../state/CountersContext';
 
-function HomeCounter({ theme, counter, setting, navigation }) {
+function HomeCounter({theme, counter, setting, navigation}) {
   // let title, count, selected, id, selectedSlant, description;
   // if (counter) let { title, count, selected, id, selectedSlant } = counter;
   // if
-  const { title, count, selected, id, selectedSlant, description } = counter
+  const {title, count, selected, id, selectedSlant, description} = counter
     ? counter
     : setting;
 
   const [isEditing, setIsEditing] = useState(false);
   const [titleValue, setTitleValue] = useState(title);
-  const { toggleSelect, toggleSelectSetting, editCounter } = useContext(
-    CountersContext
+  const {toggleSelect, toggleSelectSetting, editCounter} = useContext(
+    CountersContext,
   );
 
   const toggleEditing = () => {
@@ -33,8 +33,9 @@ function HomeCounter({ theme, counter, setting, navigation }) {
 
   const submitTitle = () => {
     setIsEditing(false);
-    editCounter(id, "title", titleValue);
+    editCounter(id, 'title', titleValue);
   };
+  console.log(setting);
 
   return (
     <TouchableOpacity
@@ -44,18 +45,16 @@ function HomeCounter({ theme, counter, setting, navigation }) {
         {
           transform: [
             {
-              rotate: selected ? selectedSlant : "0deg"
-            }
-          ]
-        }
+              rotate: selected ? selectedSlant : '0deg',
+            },
+          ],
+        },
       ]}
-      onPress={() => toggleSelect(id, counter ? true : false)}
-    >
+      onPress={() => toggleSelect(id, counter ? true : false)}>
       {counter ? (
         <TouchableWithoutFeedback
-          style={([styles.titles], { width: "68%" })}
-          onPress={toggleEditing}
-        >
+          style={([styles.titles], {width: '68%'})}
+          onPress={toggleEditing}>
           {isEditing ? (
             <TextInput
               autoFocus={true}
@@ -72,7 +71,7 @@ function HomeCounter({ theme, counter, setting, navigation }) {
           )}
         </TouchableWithoutFeedback>
       ) : (
-        <View style={([styles.titles], { width: "85%" })}>
+        <View style={([styles.titles], {width: '85%'})}>
           <Text numberOfLines={1} style={styles.titleText}>
             {title}
           </Text>
@@ -86,17 +85,16 @@ function HomeCounter({ theme, counter, setting, navigation }) {
           <View
             style={[
               styles.rightContainer(theme),
-              selected && styles.rightContainerSelected(theme)
-            ]}
-          >
+              selected && styles.rightContainerSelected(theme),
+            ]}>
             <Switch
               trackColor={{
                 false: theme.colors.LightGrey,
-                true: theme.colors.MidBlue
+                true: theme.colors.MidBlue,
               }}
               thumbColor={selected ? theme.colors.Blue : theme.colors.PureWhite}
               value={selected}
-              onValueChange={() => toggleSelect(id, counter ? true : false)}
+              onValueChange={() => toggleSelect(id, true)}
             />
             <Text numberOfLines={1} style={styles.countText}>
               {count}
@@ -113,11 +111,11 @@ function HomeCounter({ theme, counter, setting, navigation }) {
           <Switch
             trackColor={{
               false: theme.colors.LightGrey,
-              true: theme.colors.MidBlue
+              true: theme.colors.MidBlue,
             }}
             thumbColor={selected ? theme.colors.Blue : theme.colors.PureWhite}
             value={selected}
-            onValueChange={() => toggleSelect(id, counter ? true : false)}
+            onValueChange={() => toggleSelect(id, false)}
           />
         </View>
       )}
@@ -128,63 +126,63 @@ function HomeCounter({ theme, counter, setting, navigation }) {
 //rnss
 const styles = StyleSheet.create({
   container: theme => ({
-    position: "relative",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-start",
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
     backgroundColor: theme.colors.PureWhite,
     marginBottom: 4,
-    padding: 12
+    padding: 12,
   }),
   containerSelected: {
-    shadowColor: "#000000",
+    shadowColor: '#000000',
     shadowOffset: {
       width: 2,
-      height: 8
+      height: 8,
     },
     shadowOpacity: 0.1,
     shadowRadius: 1,
     elevation: 10,
-    borderRadius: 8
+    borderRadius: 8,
   },
-  countText: { fontSize: 24 },
-  descText: theme => ({ fontSize: 18 }),
+  countText: {fontSize: 24},
+  descText: theme => ({fontSize: 18}),
   titles: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-    marginRight: "2%"
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    marginRight: '2%',
   },
   titleText: {
     fontSize: 24,
-    zIndex: 1000000
+    zIndex: 1000000,
   },
   titleTextWrapper: {
     zIndex: 100000,
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
   },
   rightContainer: theme => ({
-    width: "30%",
+    width: '30%',
     borderRadius: 4,
     backgroundColor: theme.colors.LightGrey,
     margin: 0,
     padding: 8,
-    display: "flex",
-    alignItems: "flex-end",
-    color: theme.colors.Black
+    display: 'flex',
+    alignItems: 'flex-end',
+    color: theme.colors.Black,
   }),
   rightContainerSettings: {
-    alignItems: "flex-start"
+    alignItems: 'flex-start',
   },
   rightContainerSelected: theme => ({
-    backgroundColor: theme.colors.LightBlue
+    backgroundColor: theme.colors.LightBlue,
   }),
   rowBack: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });
 
 export default withTheme(HomeCounter);

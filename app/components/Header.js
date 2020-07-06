@@ -80,7 +80,7 @@ function HomeScreen({navigation, theme}) {
       }).start();
 
       Animated.timing(blurViewTop, {
-        toValue: -200,
+        toValue: 0,
         useNativeDriver: false,
         duration: 300,
         easing: Easing.inOut(Easing.linear),
@@ -417,7 +417,13 @@ function HomeScreen({navigation, theme}) {
   });
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        // {
+        //   position: numSel > 0 ? 'absolute' : 'relative',
+        // },
+      ]}>
       <View style={styles.contentContainer}>
         <View style={styles.eyeContainer}>
           {/* Hide these components when outside of eye */}
@@ -648,8 +654,8 @@ function HomeScreen({navigation, theme}) {
       </View>
       <Animated.View style={[styles.blurViewContainer, {top: blurViewTop}]}>
         <BlurView
-          // tint={'dark'}
-          intensity={50}
+          blurType={numSel > 0 ? 'light' : 'dark'}
+          // intensity={50}
           style={[styles.blurView]}></BlurView>
       </Animated.View>
     </View>
@@ -664,8 +670,9 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     top: 0,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    maxHeight: '100%',
     backgroundColor: 'rgba(0,0,0,0)',
   },
   blurViewContainer: {
@@ -673,9 +680,11 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
-    zIndex: 5000,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    zIndex: 5,
+    overflow: 'hidden',
+    maxHeight: '100%',
   },
   container: {
     position: 'absolute',
@@ -683,8 +692,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: 'column',
-    backgroundColor: 'rgba(43,44,46,0)',
-    zIndex: 50000,
+    zIndex: 5,
   },
   contentContainer: {
     position: 'relative',
@@ -716,6 +724,7 @@ const styles = StyleSheet.create({
     left: '50%',
     // right: 0,
     height: 4,
+    zIndex: 500000,
     width: 1,
     backgroundColor: theme.colors.Grey3,
   }),
@@ -787,6 +796,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 500000,
   },
   eyeLid: theme => ({
     borderBottomLeftRadius: 50,
