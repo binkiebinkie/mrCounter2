@@ -22,9 +22,7 @@ function HomeCounter({theme, counter, setting, navigation}) {
 
   const [isEditing, setIsEditing] = useState(false);
   const [titleValue, setTitleValue] = useState(title);
-  const {toggleSelect, toggleSelectSetting, editCounter} = useContext(
-    CountersContext,
-  );
+  const {toggleSelect, editCounter} = useContext(CountersContext);
 
   const toggleEditing = () => {
     setIsEditing(prevEditing => (prevEditing ? false : true));
@@ -35,7 +33,8 @@ function HomeCounter({theme, counter, setting, navigation}) {
     setIsEditing(false);
     editCounter(id, 'title', titleValue);
   };
-  console.log(setting);
+  console.log('setting card', setting);
+  console.log(selected, title);
 
   return (
     <TouchableOpacity

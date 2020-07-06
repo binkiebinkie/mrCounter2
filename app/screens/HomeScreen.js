@@ -19,7 +19,7 @@ import {withTheme} from 'react-native-elements';
 
 //rsf
 function HomeScreen({navigation, theme}) {
-  const {counters} = useContext(CountersContext);
+  const {counters, numSelCounters} = useContext(CountersContext);
 
   return (
     <SafeAreaView style={styles.safeArea(theme)}>
@@ -27,6 +27,9 @@ function HomeScreen({navigation, theme}) {
         source={require('../assets/AppBackground.png')}
         style={styles.appBg}>
         <Header navigation={navigation} />
+        {/* { numSelCounters === 0 ? (
+          <IntroScreen />
+        ) : ( */}
         <ScrollView style={styles.container(theme)}>
           <View style={styles.containerView(theme)}>
             <SectionTitle sectionTitle={'Most recent'} />
@@ -45,6 +48,7 @@ function HomeScreen({navigation, theme}) {
             </View>
           </View>
         </ScrollView>
+        {/* )} */}
         <HomeActionButtons navigation={navigation} />
       </ImageBackground>
     </SafeAreaView>

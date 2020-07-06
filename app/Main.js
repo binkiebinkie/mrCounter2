@@ -102,6 +102,7 @@ function Main(props) {
 
   // ensure number of selected state is accurate
   const countSelectedThenSet = () => {
+    console.log('ciytbSekectead');
     let numSelected = [];
 
     counters.forEach(counter =>
@@ -211,15 +212,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    backgroundColor: 'red',
-    // backgroundColor: theme.colors.Black
+    backgroundColor: theme.colors.Black,
   }),
 });
 
 export default withTheme(Main);
-
-/* <Stack.Screen
-  name="Title"
-  component={TitleScreen}
-  options={{ headerTitle: props => <Header {...props} /> }}
-/> */

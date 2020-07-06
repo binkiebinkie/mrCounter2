@@ -20,7 +20,7 @@ function Counter({counter, index, theme}) {
   );
 
   const selLength = numSelCounters.length;
-  // console.log(counter);
+
   const [compHeight, setCompHeight] = useState(0);
   const [compWidth, setCompWidth] = useState(0);
   const {title, count, selected, id, incrementAmount} = counter;

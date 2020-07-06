@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import {StyleSheet, View, SafeAreaView, ImageBackground} from 'react-native';
 import Card from '../components/Card';
 import SectionTitle from '../components/SectionTitle';
-import Header from '../components/Header';
+import HeaderPlain from '../components/HeaderPlain';
 import {CountersContext} from '../state/CountersContext';
 import {withTheme} from 'react-native-elements';
 // const backgroundImage = { uri:  };
@@ -15,7 +15,7 @@ function SettingsScreen({route, theme, navigation}) {
       <ImageBackground
         source={require('../assets/AppBackground.png')}
         style={styles.appBg}>
-        <Header navigation={navigation} />
+        <HeaderPlain navigation={navigation} showSettings={false} />
         <View style={styles.container(theme)}>
           <SectionTitle sectionTitle={'Settings'} />
           <View style={styles.counterContainer}>

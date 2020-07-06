@@ -18,7 +18,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const screenWidth = Math.floor(Dimensions.get('window').width);
 const eyeWidth = 32;
 
-function HomeScreen({navigation, theme}) {
+function Header({navigation, theme}) {
   const {numSelCounters} = useContext(CountersContext);
   const numSel = numSelCounters.length;
 
@@ -911,4 +911,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withTheme(HomeScreen);
+export default withTheme(Header);
