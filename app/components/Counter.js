@@ -102,7 +102,8 @@ function Counter({counter, index, theme}) {
             flex: selLength === 1 ? 1 : 0,
 
             width: selLength === 1 ? '100%' : '30%',
-            marginLeft: selLength === 1 ? 0 : 8,
+            marginLeft: selLength === 1 ? 0 : leftHanded ? 0 : 8,
+            marginRight: selLength === 1 ? 0 : leftHanded ? 8 : 0,
           },
         ]}>
         <View style={[styles.thButtonContainer(theme), {marginBottom: '2%'}]}>

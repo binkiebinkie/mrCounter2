@@ -92,6 +92,12 @@ function Main(props) {
   }, []);
 
   useEffect(() => countSelectedThenSet(), [counters]);
+  useEffect(() => {
+    async function saveStorage() {
+      saveToStorage();
+    }
+    saveStorage();
+  }, [settings]);
 
   const saveToStorage = async () =>
     await storeData({

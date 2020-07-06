@@ -17,13 +17,13 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const screenWidth = Math.floor(Dimensions.get('window').width);
 
-function HeaderPlain({navigation: {goBack}, theme, showSettings}) {
+function HeaderPlain({navigation, theme, showSettings}) {
   const {numSelCounters} = useContext(CountersContext);
   const numSel = numSelCounters.length;
 
   return (
     <View style={styles.container(theme)}>
-      <TouchableWithoutFeedback onPress={() => goBack()}>
+      <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
         <Image
           source={require('../assets/Back.png')}
           style={styles.backButton}
@@ -49,6 +49,7 @@ function HeaderPlain({navigation: {goBack}, theme, showSettings}) {
 const styles = StyleSheet.create({
   container: theme => ({
     position: 'relative',
+    flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 8,
     paddingTop: 20,
@@ -65,8 +66,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     maxWidth: screenWidth * 0.064,
-    paddingBottom: 15,
-    paddingRight: 25,
     zIndex: 500000,
   },
   settingsTouch: {

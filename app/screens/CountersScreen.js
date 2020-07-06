@@ -1,26 +1,25 @@
-import React, { useContext } from "react";
+import React, {useContext} from 'react';
 import {
   StyleSheet,
   View,
   SafeAreaView,
   ScrollView,
-  ImageBackground
-} from "react-native";
-import Counter from "../components/Counter";
-import Header from "../components/Header";
-import { CountersContext } from "../state/CountersContext";
-import { withTheme } from "react-native-elements";
+  ImageBackground,
+} from 'react-native';
+import Counter from '../components/Counter';
+import HeaderPlain from '../components/HeaderPlain';
+import {CountersContext} from '../state/CountersContext';
+import {withTheme} from 'react-native-elements';
 
 //rsf
-function CountersScreen({ route, theme }) {
-  const { counters, numSelCounters } = useContext(CountersContext);
+function CountersScreen({route, theme, navigation}) {
+  const {counters, numSelCounters} = useContext(CountersContext);
   return (
     <SafeAreaView style={styles.safeArea(theme)}>
       <ImageBackground
-        source={require("../assets/AppBackground.png")}
-        style={styles.appBg}
-      >
-        <Header />
+        source={require('../assets/AppBackground.png')}
+        style={styles.appBg}>
+        <HeaderPlain navigation={navigation} showSettings={true} />
         <View style={styles.container(theme)}>
           {numSelCounters.length >= 4 ? (
             <ScrollView style={styles.counterContainer}>
@@ -28,7 +27,7 @@ function CountersScreen({ route, theme }) {
                 ? counters.map((counter, i) =>
                     counter.selected ? (
                       <Counter key={i} counter={counter} index={i} />
-                    ) : null
+                    ) : null,
                   )
                 : null}
             </ScrollView>
@@ -38,7 +37,7 @@ function CountersScreen({ route, theme }) {
                 ? counters.map((counter, i) =>
                     counter.selected ? (
                       <Counter key={i} counter={counter} index={i} />
-                    ) : null
+                    ) : null,
                   )
                 : null}
             </View>
@@ -53,29 +52,29 @@ function CountersScreen({ route, theme }) {
 const styles = StyleSheet.create({
   appBg: {
     flex: 1,
-    width: "100%",
-    height: "100%",
-    resizeMode: "repeat"
+    width: '100%',
+    height: '100%',
+    resizeMode: 'repeat',
   },
   container: theme => ({
     flex: 1,
     backgroundColor: theme.colors.Black,
-    flexDirection: "column",
-    padding: 5
+    flexDirection: 'column',
+    padding: 5,
   }),
   counterContainer: {
     flex: 1,
-    height: "100%",
-    flexDirection: "column"
+    height: '100%',
+    flexDirection: 'column',
   },
   goButton: {
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   safeArea: theme => ({
     backgroundColor: theme.colors.Black,
-    flex: 1
-  })
+    flex: 1,
+  }),
 });
 
 export default withTheme(CountersScreen);
