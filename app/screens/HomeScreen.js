@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
+  StatusBar,
 } from 'react-native';
 import Card from '../components/Card';
 import HomeActionButtons from '../components/HomeActionButtons';
@@ -63,13 +64,14 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     padding: 8,
-    paddingTop: 115,
+    paddingTop: 90,
   }),
   containerView: theme => ({
     position: 'relative',
     flexDirection: 'column',
     justifyContent: 'space-between',
     flex: 1,
+    paddingBottom: 130,
     minHeight: '100%',
   }),
   counterContainer: {

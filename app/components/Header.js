@@ -6,7 +6,9 @@ import {
   Image,
   Dimensions,
   Easing,
+  StatusBar,
   TouchableWithoutFeedback,
+  SafeAreaView,
 } from 'react-native';
 import {CountersContext} from '../state/CountersContext';
 import {withTheme} from 'react-native-elements';
@@ -416,6 +418,27 @@ function HomeScreen({navigation, theme}) {
     outputRange: ['0deg', '360deg'],
   });
 
+  let eyeImg = (
+    <Image source={require(`../assets/Pupil2.png`)} style={styles.eyeBallImg} />
+  );
+
+  if (numSel === 3) {
+    eyeImg = (
+      <Image
+        source={require(`../assets/Pupil3.png`)}
+        style={styles.eyeBallImg}
+      />
+    );
+  }
+  if (numSel >= 4) {
+    eyeImg = (
+      <Image
+        source={require(`../assets/Pupil4.png`)}
+        style={styles.eyeBallImg}
+      />
+    );
+  }
+
   return (
     <View
       style={[
@@ -430,26 +453,30 @@ function HomeScreen({navigation, theme}) {
           <View style={styles.eyeContainerHidden}>
             {/* eyeball and pupil */}
             <Animated.View style={[styles.eyeBallCenter]}>
-              <Animated.View
-                style={[
-                  styles.eyeBall(theme),
-                  numSel > 0 && styles.eyeBallAwake,
-                  {
-                    width: eyeballWidth,
-                    height: eyeballWidth,
-                  },
-                ]}>
-                <View
+              {numSel > 1 ? (
+                eyeImg
+              ) : (
+                <Animated.View
                   style={[
-                    styles.eyeBallPupil(theme),
+                    styles.eyeBall(theme),
+                    numSel > 0 && styles.eyeBallAwake,
                     {
-                      backgroundColor:
-                        numSel > 0
-                          ? theme.colors.Black
-                          : theme.colors.DarkBeige,
+                      width: eyeballWidth,
+                      height: eyeballWidth,
                     },
-                  ]}></View>
-              </Animated.View>
+                  ]}>
+                  <View
+                    style={[
+                      styles.eyeBallPupil(theme),
+                      {
+                        backgroundColor:
+                          numSel > 0
+                            ? theme.colors.Black
+                            : theme.colors.DarkBeige,
+                      },
+                    ]}></View>
+                </Animated.View>
+              )}
             </Animated.View>
             {/* Whites of Eye */}
             <Animated.View
@@ -540,26 +567,30 @@ function HomeScreen({navigation, theme}) {
           <View style={styles.eyeContainerHidden}>
             {/* eyeball and pupil */}
             <Animated.View style={[styles.eyeBallCenter]}>
-              <Animated.View
-                style={[
-                  styles.eyeBall(theme),
-                  numSel > 0 && styles.eyeBallAwake,
-                  {
-                    width: eyeballWidth,
-                    height: eyeballWidth,
-                  },
-                ]}>
-                <View
+              {numSel > 1 ? (
+                eyeImg
+              ) : (
+                <Animated.View
                   style={[
-                    styles.eyeBallPupil(theme),
+                    styles.eyeBall(theme),
+                    numSel > 0 && styles.eyeBallAwake,
                     {
-                      backgroundColor:
-                        numSel > 0
-                          ? theme.colors.Black
-                          : theme.colors.DarkBeige,
+                      width: eyeballWidth,
+                      height: eyeballWidth,
                     },
-                  ]}></View>
-              </Animated.View>
+                  ]}>
+                  <View
+                    style={[
+                      styles.eyeBallPupil(theme),
+                      {
+                        backgroundColor:
+                          numSel > 0
+                            ? theme.colors.Black
+                            : theme.colors.DarkBeige,
+                      },
+                    ]}></View>
+                </Animated.View>
+              )}
             </Animated.View>
             {/* Whites of Eye */}
             <Animated.View
@@ -653,8 +684,15 @@ function HomeScreen({navigation, theme}) {
         </View>
       </View>
       <Animated.View style={[styles.blurViewContainer, {top: blurViewTop}]}>
+        <StatusBar
+          translucent={true}
+          backgroundColor={'rgba(0,0,0,0)'}
+          barStyle="light-content"
+        />
+
         <BlurView
-          blurType={numSel > 0 ? 'light' : 'dark'}
+          blurType={'dark'}
+          // blurType={numSel > 0 ? 'light' : 'dark'}
           // intensity={50}
           style={[styles.blurView]}></BlurView>
       </Animated.View>
@@ -701,7 +739,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10,
-    paddingTop: 40,
+    paddingTop: 20,
     paddingBottom: 10,
   },
   contentContainerOutline: theme => ({
@@ -739,6 +777,11 @@ const styles = StyleSheet.create({
     zIndex: 10000,
     borderRadius: 50,
   }),
+  eyeBallImg: {
+    maxWidth: 16,
+    resizeMode: 'contain',
+    zIndex: 500,
+  },
   eyeBallCenter: {
     position: 'absolute',
     left: 0,

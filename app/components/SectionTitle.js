@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
     marginBottom: 8,
+    marginTop: 4,
   }),
   count: theme => ({
     fontWeight: 'bold',
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     right: 0,
     top: 0,
     bottom: 0,
-    color: theme.colors.Grey4,
+    color: theme.colors.Grey3,
   }),
   containerDingus: theme => ({
     position: 'absolute',
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   title: theme => ({
     paddingLeft: 12,
     paddingRight: 12,
-    color: theme.colors.Grey4,
+    color: theme.colors.Grey3,
     fontWeight: 'bold',
     textTransform: 'uppercase',
     borderRightWidth: 1,
