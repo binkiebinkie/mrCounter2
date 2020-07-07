@@ -7,6 +7,7 @@ import {guidGenerator} from './helpers';
 import {ThemeProvider} from 'react-native-elements';
 import {withTheme} from 'react-native-elements';
 import {storeData, getData} from './storage';
+import KeepAwake from 'react-native-keep-awake';
 
 import HomeScreen from './screens/HomeScreen';
 import CountersScreen from './screens/CountersScreen';
@@ -44,6 +45,7 @@ function Main(props) {
   const [counters, setCounters] = useState([]);
   const [numSelCounters, setNumSelCounters] = useState([]);
   const [settings, setSettings] = useState([]);
+  const [stayAwake, setStayAwake] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -96,6 +98,13 @@ function Main(props) {
     async function saveStorage() {
       saveToStorage();
     }
+
+    const keepScreenOn = settings.find(
+      setting => setting.id === 'keepScreenOn',
+    );
+    console.log(keepScreenOn);
+    if (keepScreenOn) setStayAwake(keepScreenOn.selected);
+
     saveStorage();
   }, [settings]);
 
@@ -108,7 +117,6 @@ function Main(props) {
 
   // ensure number of selected state is accurate
   const countSelectedThenSet = () => {
-    console.log('ciytbSekectead');
     let numSelected = [];
 
     counters.forEach(counter =>
@@ -129,7 +137,7 @@ function Main(props) {
       selectedSlant: Math.random() > 0.5 ? '-1deg' : '1deg',
     };
 
-    setCounters([...counters, newCounter]);
+    setCounters([newCounter, ...counters]);
   };
 
   // find counter by id remove
@@ -145,7 +153,6 @@ function Main(props) {
 
   // find counter or setting by id then toggle selected state
   const toggleSelect = (id, isCounter) => {
-    console.log(id, isCounter);
     const arrToMap = isCounter ? counters : settings;
     const newArr = arrToMap.map((obj, i) => {
       if (obj.id !== id) return obj;
@@ -153,7 +160,6 @@ function Main(props) {
       newObj.selected = !obj.selected;
       return newObj;
     });
-    console.log('newARR', newArr);
     if (isCounter) {
       setCounters(newArr);
     } else {
@@ -172,6 +178,8 @@ function Main(props) {
 
     setCounters(newCounters);
   };
+  console.log(stayAwake, 'stayAwake');
+
   return (
     <ThemeProvider theme={theme}>
       <CountersContext.Provider
@@ -208,6 +216,7 @@ function Main(props) {
             </Stack.Navigator>
           </SafeAreaView>
         </NavigationContainer>
+        {stayAwake && <KeepAwake />}
       </CountersContext.Provider>
     </ThemeProvider>
   );
