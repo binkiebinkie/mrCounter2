@@ -8,6 +8,7 @@ import {ThemeProvider} from 'react-native-elements';
 import {withTheme} from 'react-native-elements';
 import {storeData, getData} from './storage';
 import KeepAwake from 'react-native-keep-awake';
+import moment from 'moment';
 
 import HomeScreen from './screens/HomeScreen';
 import CountersScreen from './screens/CountersScreen';
@@ -129,7 +130,7 @@ function Main(props) {
   // add a new counter with a title
   const addCounter = (title, count) => {
     const newCounter = {
-      title: title ? title : `Counter ${counters ? counters.length + 1 : 1}`,
+      title: title ? title : moment().format('MMMM Do, YYYY'),
       count: count >= 0 ? count : 0,
       id: guidGenerator(),
       selected: false,

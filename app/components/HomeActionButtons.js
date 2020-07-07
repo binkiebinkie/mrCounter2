@@ -38,10 +38,12 @@ function HomeScreen({navigation, theme}) {
     ),
   ).current;
   const goOpacity = useRef(new Animated.Value(numSel > 0 ? 1 : 0)).current;
+  const newOpacity = useRef(new Animated.Value(1)).current;
   const delLeft = useRef(new Animated.Value(numSel > 0 ? 0 : -delDimensions))
     .current;
+  const [shouldDelete, setShouldDelete] = useState(false);
 
-  const calcAnimated = firstLoad => {
+  const calcAnimated = () => {
     if (numSel === 0) {
       Animated.timing(goWidth, {
         toValue: 100,
@@ -52,6 +54,12 @@ function HomeScreen({navigation, theme}) {
 
       Animated.timing(newWidth, {
         toValue: screenWidth - containerMargin * 2,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
+      Animated.timing(newOpacity, {
+        toValue: 1,
         useNativeDriver: false,
         duration,
         easing: Easing.inOut(Easing.linear),
@@ -78,6 +86,12 @@ function HomeScreen({navigation, theme}) {
         duration,
         easing: Easing.inOut(Easing.linear),
       }).start();
+      Animated.timing(newOpacity, {
+        toValue: 1,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
 
       Animated.timing(newWidth, {
         toValue: (screenWidth - containerMargin * 4 - delDimensions) * 0.3,
@@ -100,72 +114,133 @@ function HomeScreen({navigation, theme}) {
         easing: Easing.inOut(Easing.linear),
       }).start();
     }
+    if (shouldDelete) {
+      Animated.timing(delLeft, {
+        toValue: 0,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
+      Animated.timing(goOpacity, {
+        toValue: 0,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
+      Animated.timing(newWidth, {
+        toValue: 100,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
+      Animated.timing(goWidth, {
+        toValue: 100,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
+    }
   };
 
   useEffect(() => calcAnimated(), [numSel]);
+  useEffect(() => calcAnimated(), [shouldDelete]);
+
+  const shouldDeleteCounters = () => {
+    if (shouldDelete) {
+      removeCounters();
+      setShouldDelete(false);
+    } else {
+      setShouldDelete(true);
+    }
+  };
+
   return (
-    <View style={styles.buttonContainer}>
-      <Animated.View
-        style={[
-          styles.bottomButton,
-          styles.delButton(theme),
-          {
-            opacity: goOpacity,
-            left: delLeft,
-            position: delLeft === 0 ? 'relative' : 'absolute',
-            width: delLeft === 0 ? 0 : delDimensions,
-          },
-        ]}
-        disabled={numSel < 1 ? true : false}>
-        <View
-          style={[{backgroundColor: theme.colors.Grey3}, styles.actionButton]}>
-          <Text style={styles.buttonText}>-</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.buttonPress}
-          onPress={() => removeCounters()}
-        />
-      </Animated.View>
-      <Animated.View
-        style={[
-          styles.bottomButton,
-          styles.newButton(theme),
-          {
-            width: newWidth,
-            marginLeft: numSel > 0 ? 8 + delDimensions : 0,
-          },
-        ]}>
-        <View
+    <>
+      <View style={styles.buttonContainer}>
+        <Animated.View
           style={[
-            styles.actionButton,
-            {backgroundColor: theme.colors.MidBlue},
+            styles.bottomButton,
+            styles.delButton(theme),
+            {
+              opacity: shouldDelete ? 1 : goOpacity,
+              left: delLeft,
+              position: delLeft === 0 ? 'relative' : 'absolute',
+              width:
+                delLeft === 0
+                  ? 0
+                  : shouldDelete
+                  ? screenWidth - containerMargin * 2
+                  : delDimensions,
+            },
+          ]}
+          disabled={numSel < 1 ? true : false}>
+          <View
+            style={[
+              {backgroundColor: theme.colors.Grey3},
+              styles.actionButton,
+            ]}>
+            <Text style={styles.buttonText}>-</Text>
+          </View>
+          <TouchableOpacity
+            style={styles.buttonPress}
+            onPress={() => shouldDeleteCounters()}
+          />
+        </Animated.View>
+        <Animated.View
+          style={[
+            styles.bottomButton,
+            styles.newButton(theme),
+            {
+              width: newWidth,
+              marginLeft:
+                numSel > 0
+                  ? shouldDelete
+                    ? screenWidth
+                    : 8 + delDimensions
+                  : 0,
+              opacity: newOpacity,
+            },
           ]}>
-          <Text style={styles.buttonText}>+</Text>
-        </View>
-        <Text style={styles.buttonText}>New</Text>
-        <TouchableOpacity
-          style={styles.buttonPress}
-          onPress={() => addCounter()}
-        />
-      </Animated.View>
-      <Animated.View
-        style={[
-          styles.bottomButton,
-          styles.goButton(theme),
-          {width: goWidth, opacity: goOpacity},
-        ]}
-        disabled={numSel < 1 ? true : false}>
-        <Text style={styles.buttonText}>Go Count</Text>
-        <View
-          style={[{backgroundColor: theme.colors.Grey3}, styles.actionButton]}>
-          <Text style={styles.buttonText}>></Text>
-        </View>
-        <TouchableOpacity
-          style={styles.buttonPress}
-          onPress={() => navigation.navigate('Counters')}
-        />
-      </Animated.View>
-    </View>
+          <View
+            style={[
+              styles.actionButton,
+              {backgroundColor: theme.colors.MidBlue},
+            ]}>
+            <Text style={styles.buttonText}>+</Text>
+          </View>
+          <Text style={styles.buttonText}>New</Text>
+          <TouchableOpacity
+            style={styles.buttonPress}
+            onPress={() => addCounter()}
+          />
+        </Animated.View>
+        <Animated.View
+          style={[
+            styles.bottomButton,
+            styles.goButton(theme),
+            {width: goWidth, opacity: goOpacity},
+          ]}
+          disabled={numSel < 1 ? true : false}>
+          <Text style={styles.buttonText}>Go Count</Text>
+          <View
+            style={[
+              {backgroundColor: theme.colors.Grey3},
+              styles.actionButton,
+            ]}>
+            <Text style={styles.buttonText}>></Text>
+          </View>
+          <TouchableOpacity
+            style={styles.buttonPress}
+            onPress={() => navigation.navigate('Counters')}
+          />
+        </Animated.View>
+      </View>
+      <TouchableWithoutFeedback
+        style={styles.closeDelete}
+        onPress={() => console.log('setButtonToNoWidth')}>
+        <View></View>
+      </TouchableWithoutFeedback>
+    </>
   );
 }
 
@@ -206,14 +281,15 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: 'bold',
   },
+  closeDelete: {},
+  delButton: theme => ({
+    backgroundColor: 'red',
+    height: delDimensions,
+  }),
   newButton: theme => ({
     paddingRight: 12,
     marginRight: 8,
     backgroundColor: theme.colors.Blue,
-  }),
-  delButton: theme => ({
-    backgroundColor: 'red',
-    height: delDimensions,
   }),
   goButton: theme => ({
     backgroundColor: theme.colors.Grey1,
