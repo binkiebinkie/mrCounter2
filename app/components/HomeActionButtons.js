@@ -17,7 +17,7 @@ const containerMargin = 8;
 const delDimensions = 43;
 const duration = 200;
 
-function HomeScreen({navigation, theme}) {
+function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
   const {numSelCounters, addCounter, removeCounters} = useContext(
     CountersContext,
   );
@@ -41,7 +41,7 @@ function HomeScreen({navigation, theme}) {
   const newOpacity = useRef(new Animated.Value(1)).current;
   const delLeft = useRef(new Animated.Value(numSel > 0 ? 0 : -delDimensions))
     .current;
-  const [shouldDelete, setShouldDelete] = useState(false);
+  const delWidth = useRef(new Animated.Value(delDimensions)).current;
 
   const calcAnimated = () => {
     if (numSel === 0) {
@@ -74,6 +74,12 @@ function HomeScreen({navigation, theme}) {
 
       Animated.timing(delLeft, {
         toValue: -delDimensions * 2,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
+      Animated.timing(delWidth, {
+        toValue: delDimensions,
         useNativeDriver: false,
         duration,
         easing: Easing.inOut(Easing.linear),
@@ -113,6 +119,12 @@ function HomeScreen({navigation, theme}) {
         duration,
         easing: Easing.inOut(Easing.linear),
       }).start();
+      Animated.timing(delWidth, {
+        toValue: delDimensions,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
     }
     if (shouldDelete) {
       Animated.timing(delLeft, {
@@ -135,6 +147,12 @@ function HomeScreen({navigation, theme}) {
       }).start();
       Animated.timing(goWidth, {
         toValue: 100,
+        useNativeDriver: false,
+        duration,
+        easing: Easing.inOut(Easing.linear),
+      }).start();
+      Animated.timing(delWidth, {
+        toValue: screenWidth - containerMargin * 2,
         useNativeDriver: false,
         duration,
         easing: Easing.inOut(Easing.linear),
@@ -165,12 +183,7 @@ function HomeScreen({navigation, theme}) {
               opacity: shouldDelete ? 1 : goOpacity,
               left: delLeft,
               position: delLeft === 0 ? 'relative' : 'absolute',
-              width:
-                delLeft === 0
-                  ? 0
-                  : shouldDelete
-                  ? screenWidth - containerMargin * 2
-                  : delDimensions,
+              width: delWidth,
             },
           ]}
           disabled={numSel < 1 ? true : false}>
@@ -281,10 +294,10 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: 'bold',
   },
-  closeDelete: {},
   delButton: theme => ({
     backgroundColor: 'red',
     height: delDimensions,
+    zIndex: 100,
   }),
   newButton: theme => ({
     paddingRight: 12,
@@ -297,4 +310,4 @@ const styles = StyleSheet.create({
   }),
 });
 
-export default withTheme(HomeScreen);
+export default withTheme(HomeActionButtons);

@@ -12,7 +12,16 @@ import {
 import {withTheme} from 'react-native-elements';
 import {CountersContext} from '../state/CountersContext';
 
-function HomeCounter({theme, counter, setting, navigation}) {
+function HomeCounter({
+  theme,
+  counter,
+  setting,
+  navigation,
+  isEditing,
+  setIsEditing,
+  triggerSubmitTitle,
+  setTriggerSubmitTitle,
+}) {
   // let title, count, selected, id, selectedSlant, description;
   // if (counter) let { title, count, selected, id, selectedSlant } = counter;
   // if
@@ -20,21 +29,27 @@ function HomeCounter({theme, counter, setting, navigation}) {
     ? counter
     : setting;
 
-  const [isEditing, setIsEditing] = useState(false);
   const [titleValue, setTitleValue] = useState(title);
   const {toggleSelect, editCounter} = useContext(CountersContext);
 
+  useEffect(() => {
+    if (triggerSubmitTitle === id) {
+      submitTitle();
+      setTriggerSubmitTitle('');
+    }
+  }, [triggerSubmitTitle]);
+
   const toggleEditing = () => {
-    setIsEditing(prevEditing => (prevEditing ? false : true));
-    if (isEditing) titleInput.focus();
+    setIsEditing(prevEditing =>
+      prevEditing.length > 0 && prevEditing === id ? '' : id,
+    );
+    if (isEditing === id) titleInput.focus();
   };
 
   const submitTitle = () => {
-    setIsEditing(false);
+    setIsEditing('');
     editCounter(id, 'title', titleValue);
   };
-  console.log('setting card', setting);
-  console.log(selected, title);
 
   return (
     <TouchableOpacity
@@ -54,7 +69,7 @@ function HomeCounter({theme, counter, setting, navigation}) {
         <TouchableWithoutFeedback
           style={([styles.titles], {width: '68%'})}
           onPress={toggleEditing}>
-          {isEditing ? (
+          {isEditing === id ? (
             <TextInput
               autoFocus={true}
               value={titleValue}
@@ -99,7 +114,7 @@ function HomeCounter({theme, counter, setting, navigation}) {
               {count}
             </Text>
           </View>
-          {isEditing && (
+          {isEditing === id && (
             <TouchableWithoutFeedback onPress={() => submitTitle()}>
               <View style={styles.titleTextWrapper}></View>
             </TouchableWithoutFeedback>
@@ -154,6 +169,9 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 24,
     zIndex: 1000000,
+    maxWidth: '65%',
+    padding: 0,
+    margin: 0,
   },
   titleTextWrapper: {
     zIndex: 100000,

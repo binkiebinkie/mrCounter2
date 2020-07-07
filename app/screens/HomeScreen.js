@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   StatusBar,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Card from '../components/Card';
 import HomeActionButtons from '../components/HomeActionButtons';
@@ -20,6 +21,15 @@ import {withTheme} from 'react-native-elements';
 //rsf
 function HomeScreen({navigation, theme}) {
   const {counters, numSelCounters} = useContext(CountersContext);
+  const [shouldDelete, setShouldDelete] = useState(false);
+  const [isEditing, setIsEditing] = useState('');
+  const [triggerSubmitTitle, setTriggerSubmitTitle] = useState('');
+
+  const openCloseButton = () => {
+    setShouldDelete(false);
+    setTriggerSubmitTitle(isEditing);
+    setIsEditing('');
+  };
 
   return (
     <SafeAreaView style={styles.safeArea(theme)}>
@@ -36,7 +46,15 @@ function HomeScreen({navigation, theme}) {
             <View style={styles.counterContainer}>
               {counters
                 ? counters.map((counter, i) => (
-                    <Card key={i} counter={counter} index={i} />
+                    <Card
+                      key={i}
+                      counter={counter}
+                      index={i}
+                      isEditing={isEditing}
+                      setIsEditing={setIsEditing}
+                      triggerSubmitTitle={triggerSubmitTitle}
+                      setTriggerSubmitTitle={setTriggerSubmitTitle}
+                    />
                   ))
                 : null}
               <View
@@ -49,7 +67,16 @@ function HomeScreen({navigation, theme}) {
           </View>
         </ScrollView>
         {/* )} */}
-        <HomeActionButtons navigation={navigation} />
+        <HomeActionButtons
+          navigation={navigation}
+          setShouldDelete={setShouldDelete}
+          shouldDelete={shouldDelete}
+        />
+        {(shouldDelete || isEditing.length > 0) && (
+          <TouchableWithoutFeedback onPress={() => openCloseButton()}>
+            <View style={[styles.closeButton]}></View>
+          </TouchableWithoutFeedback>
+        )}
       </ImageBackground>
     </SafeAreaView>
   );
@@ -62,6 +89,25 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'repeat',
+  },
+  backRightBtn: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75,
+    backgroundColor: 'red',
+    right: 0,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    // backgroundColor: 'red',
+    zIndex: 10,
   },
   container: theme => ({
     position: 'relative',
@@ -93,16 +139,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingLeft: 15,
-  },
-  backRightBtn: {
-    alignItems: 'center',
-    bottom: 0,
-    justifyContent: 'center',
-    position: 'absolute',
-    top: 0,
-    width: 75,
-    backgroundColor: 'red',
-    right: 0,
   },
 });
 
