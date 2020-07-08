@@ -16,29 +16,28 @@ import SettingsScreen from './screens/SettingsScreen';
 
 const Stack = createStackNavigator();
 
-const theme = {
-  colors: {
-    primary: '#EAE6E1',
-    Beige1: '#EAE6E1',
+const darkModeColors = {
+  primary: '#EAE6E1',
+  Beige1: '#EAE6E1',
 
-    Grey1: '#4D4D4D',
-    Grey2: '#69696C',
-    Grey3: '#979797',
-    Grey4: '#DCDCDB',
-    LightGrey: '#F2F3F3',
-    Black: '#2B2C2E',
-    Darkest: '#211E1E',
-    PureWhite: '#FFFFFF',
+  Grey1: '#4D4D4D',
+  Grey2: '#69696C',
+  Grey3: '#979797',
+  Grey4: '#DCDCDB',
+  LightGrey: '#F2F3F3',
+  Black: '#2B2C2E',
+  Darkest: '#211E1E',
+  White: '#F9F7F8',
+  PureWhite: '#FFFFFF',
 
-    DeepBeige: '#897A5E',
-    DarkBeige: '#AAA191',
+  DeepBeige: '#897A5E',
+  DarkBeige: '#AAA191',
 
-    Green: '#3AC34F',
+  Green: '#3AC34F',
 
-    Blue: '#1681FF',
-    MidBlue: '#88BFFF',
-    LightBlue: '#E8F2FF',
-  },
+  Blue: '#1681FF',
+  MidBlue: '#88BFFF',
+  LightBlue: '#E8F2FF',
 };
 
 //rsf
@@ -47,6 +46,44 @@ function Main(props) {
   const [numSelCounters, setNumSelCounters] = useState([]);
   const [settings, setSettings] = useState([]);
   const [stayAwake, setStayAwake] = useState(false);
+
+  let theme = {
+    colors: {
+      primary: '#EAE6E1',
+      Beige1: '#EAE6E1',
+
+      Grey1: '#4D4D4D',
+      Grey2: '#69696C',
+      Grey3: '#979797',
+      Grey4: '#DCDCDB',
+      LightGrey: '#F2F3F3',
+      Black: '#2B2C2E',
+      Darkest: '#211E1E',
+      White: '#F9F7F8',
+      PureWhite: '#FFFFFF',
+
+      DeepBeige: '#897A5E',
+      DarkBeige: '#AAA191',
+      Beige1: '#EAE6E1', //BGBeige
+      Beige4: '#4B3F29',
+
+      ScreenGreen: '#DFE5E0',
+      ScreenGreen0: '#EDF2EE',
+      ScreenGreen2: '#C8D7C7',
+      ScreenGreen3: '#C5E0CE',
+      ScreenGreen5: '#66B59D',
+
+      Blue: '#1681FF',
+      MidBlue: '#88BFFF',
+      LightBlue: '#E8F2FF',
+
+      Green: '#3AC34F',
+      Yellow: '#FCD24C',
+      Orange: '#FF7426',
+      Red: '#EE1C1C',
+      Red2: '#FFACAC',
+    },
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -105,6 +142,12 @@ function Main(props) {
     );
     console.log(keepScreenOn);
     if (keepScreenOn) setStayAwake(keepScreenOn.selected);
+
+    const darkMode = settings.find(setting => setting.id === 'darkMode');
+
+    if (darkMode && darkMode.selected) {
+      theme.colors = {...darkModeColors};
+    }
 
     saveStorage();
   }, [settings]);

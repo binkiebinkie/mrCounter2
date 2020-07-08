@@ -20,7 +20,7 @@ import {withTheme} from 'react-native-elements';
 
 //rsf
 function HomeScreen({navigation, theme}) {
-  const {counters, numSelCounters} = useContext(CountersContext);
+  const {counters, numSelCounters, settings} = useContext(CountersContext);
   const [shouldDelete, setShouldDelete] = useState(false);
   const [isEditing, setIsEditing] = useState('');
   const [triggerSubmitTitle, setTriggerSubmitTitle] = useState('');
@@ -30,11 +30,17 @@ function HomeScreen({navigation, theme}) {
     setTriggerSubmitTitle(isEditing);
     setIsEditing('');
   };
+  const darkMode = settings.find(setting => setting.id === 'darkMode');
+  // console.log;
 
   return (
     <SafeAreaView style={styles.safeArea(theme)}>
       <ImageBackground
-        source={require('../assets/AppBackground.png')}
+        source={
+          darkMode && darkMode.selected
+            ? require('../assets/AppBackground.png')
+            : require('../assets/AppBackgroundBeige.png')
+        }
         style={styles.appBg}>
         <Header navigation={navigation} />
         {/* { numSelCounters === 0 ? (
