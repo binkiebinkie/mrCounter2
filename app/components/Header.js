@@ -64,7 +64,7 @@ function Header({navigation, theme}) {
 
       // Eyelid bg closing (whites of eyes)
       Animated.timing(eyeWidth, {
-        toValue: 0,
+        toValue: 4,
         useNativeDriver: false,
         duration: 300,
         easing: Easing.linear,
@@ -107,41 +107,41 @@ function Header({navigation, theme}) {
 
       // make eye rings retract
       Animated.timing(eyeRingSize1, {
-        toValue: 32,
+        toValue: 0,
         useNativeDriver: false,
         duration: 200,
         easing: Easing.inOut(Easing.linear),
       }).start();
 
       Animated.timing(eyeRingSize2, {
-        toValue: 32,
+        toValue: 0,
         useNativeDriver: false,
         duration: 200,
         easing: Easing.inOut(Easing.linear),
       }).start();
       Animated.timing(eyeRingSize3, {
-        toValue: 32,
+        toValue: 0,
         useNativeDriver: false,
         duration: 200,
         easing: Easing.inOut(Easing.linear),
       }).start();
 
       Animated.timing(eyeRingSize4, {
-        toValue: 32,
+        toValue: 0,
         useNativeDriver: false,
         duration: 200,
         easing: Easing.inOut(Easing.linear),
       }).start();
 
       Animated.timing(eyeRingSize5, {
-        toValue: 32,
+        toValue: 0,
         useNativeDriver: false,
         duration: 200,
         easing: Easing.inOut(Easing.linear),
       }).start();
 
       Animated.timing(eyeRingSize6, {
-        toValue: 32,
+        toValue: 0,
         useNativeDriver: false,
         duration: 200,
         easing: Easing.inOut(Easing.linear),
