@@ -65,7 +65,7 @@ function HomeScreen({navigation, theme}) {
                 : null}
               <View
                 style={{
-                  height: 70,
+                  height: 60,
                   width: '100%',
                   opacity: 0,
                 }}></View>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     flexDirection: 'column',
     flex: 1,
-    padding: 8,
+    // padding: 8,
     paddingTop: 90,
   }),
   containerView: theme => ({
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     flex: 1,
-    paddingBottom: 130,
+    paddingBottom: 115,
     minHeight: '100%',
   }),
   counterContainer: {

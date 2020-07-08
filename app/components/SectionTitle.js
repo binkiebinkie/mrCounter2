@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderTopRightRadius: 8,
     borderTopLeftRadius: 8,
-    marginBottom: 8,
+    margin: 8,
     marginTop: 4,
   }),
   count: (theme, numSel) => ({

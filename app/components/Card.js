@@ -145,8 +145,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     backgroundColor: theme.colors.PureWhite,
-    marginBottom: 4,
     padding: 12,
+    marginBottom: 4,
+    marginRight: 8,
+    marginLeft: 8,
   }),
   containerSelected: {
     shadowColor: '#000000',
