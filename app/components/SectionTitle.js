@@ -5,16 +5,14 @@ import {CountersContext} from '../state/CountersContext';
 import {withTheme} from 'react-native-elements';
 
 function SectionTitle({sectionTitle, theme}) {
-  const {counters, settings} = useContext(CountersContext);
-
+  const {counters, settings, numSelCounters} = useContext(CountersContext);
+  console.log(numSelCounters);
   return (
     <View style={styles.container(theme)}>
-      <Text style={styles.title(theme)}>{sectionTitle}</Text>
-      {/* <LinearGradient
-        colors={["#AAA191", "transparent"]}
-        style={styles.gradient}
-      ></LinearGradient> */}
-      <Text style={styles.count(theme)}>
+      <Text style={styles.title(theme, numSelCounters.length)}>
+        {sectionTitle}
+      </Text>
+      <Text style={styles.count(theme, numSelCounters.length)}>
         {sectionTitle === 'Settings'
           ? settings.length
           : counters
@@ -31,7 +29,7 @@ const styles = StyleSheet.create({
   container: theme => ({
     position: 'relative',
     flexDirection: 'row',
-    borderColor: theme.colors.Grey2,
+    borderColor: theme.colors.Grey3,
     borderTopWidth: 1,
     borderRightWidth: 1,
     borderLeftWidth: 1,
@@ -40,34 +38,34 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     marginTop: 4,
   }),
-  count: theme => ({
+  count: (theme, numSel) => ({
     fontWeight: 'bold',
     paddingRight: 4,
     marginRight: 2,
     height: '100%',
-    borderColor: theme.colors.Grey2,
+    borderColor: theme.colors.Grey3,
     position: 'absolute',
     right: 0,
     top: 0,
     bottom: 0,
-    color: theme.colors.Grey3,
+    color: numSel > 0 ? theme.colors.Grey2 : theme.colors.Grey3,
   }),
   containerDingus: theme => ({
     position: 'absolute',
     left: '50%',
     top: -4,
-    backgroundColor: theme.colors.Grey2,
+    backgroundColor: theme.colors.Grey3,
     height: 4,
     width: 1,
   }),
-  title: theme => ({
+  title: (theme, numSel) => ({
     paddingLeft: 12,
     paddingRight: 12,
-    color: theme.colors.Grey3,
+    color: numSel > 0 ? theme.colors.Grey2 : theme.colors.Grey3,
     fontWeight: 'bold',
     textTransform: 'uppercase',
     borderRightWidth: 1,
-    borderColor: theme.colors.Grey2,
+    borderColor: theme.colors.Grey3,
     borderTopWidth: 0,
   }),
 });

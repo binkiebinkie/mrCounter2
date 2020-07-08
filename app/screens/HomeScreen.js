@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    // backgroundColor: 'red',
     zIndex: 10,
   },
   container: theme => ({
