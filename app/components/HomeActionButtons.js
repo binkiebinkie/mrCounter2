@@ -7,6 +7,7 @@ import {
   Easing,
   Text,
   TouchableOpacity,
+  Image,
   TouchableWithoutFeedback,
 } from 'react-native';
 import {CountersContext} from '../state/CountersContext';
@@ -192,8 +193,14 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
               {backgroundColor: theme.colors.Grey3},
               styles.actionButton,
             ]}>
-            <Text style={styles.buttonText}>-</Text>
+            <Image
+              source={require(`../assets/Trash.png`)}
+              style={styles.buttonImg}
+            />
           </View>
+          <Text style={styles.buttonText}>
+            {shouldDelete ? `Delete ${numSel} Counters` : ''}
+          </Text>
           <TouchableOpacity
             style={styles.buttonPress}
             onPress={() => shouldDeleteCounters()}
@@ -202,7 +209,7 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
         <Animated.View
           style={[
             styles.bottomButton,
-            styles.newButton(theme),
+            styles.newButton(theme, numSel),
             {
               width: newWidth,
               marginLeft:
@@ -217,11 +224,16 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
           <View
             style={[
               styles.actionButton,
-              {backgroundColor: theme.colors.MidBlue},
+              {backgroundColor: theme.colors.Grey3},
             ]}>
-            <Text style={styles.buttonText}>+</Text>
+            <Image
+              source={require(`../assets/Plus.png`)}
+              style={styles.buttonImg}
+            />
           </View>
-          <Text style={styles.buttonText}>New</Text>
+          <Text style={styles.buttonText}>
+            {numSel > 0 ? '' : 'Add New Counter'}
+          </Text>
           <TouchableOpacity
             style={styles.buttonPress}
             onPress={() => addCounter()}
@@ -240,7 +252,10 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
               {backgroundColor: theme.colors.Grey3},
               styles.actionButton,
             ]}>
-            <Text style={styles.buttonText}>></Text>
+            <Image
+              source={require(`../assets/Forward.png`)}
+              style={styles.buttonImg}
+            />
           </View>
           <TouchableOpacity
             style={styles.buttonPress}
@@ -248,11 +263,6 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
           />
         </Animated.View>
       </View>
-      <TouchableWithoutFeedback
-        style={styles.closeDelete}
-        onPress={() => console.log('setButtonToNoWidth')}>
-        <View></View>
-      </TouchableWithoutFeedback>
     </>
   );
 }
@@ -289,23 +299,29 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderRadius: 8,
   },
+  buttonImg: {
+    height: 16,
+    resizeMode: 'contain',
+  },
   buttonText: {
     color: 'white',
     textTransform: 'uppercase',
     fontWeight: 'bold',
+    fontSize: 16,
   },
   delButton: theme => ({
-    backgroundColor: 'red',
+    backgroundColor: theme.colors.Grey1,
     height: delDimensions,
+    paddingRight: 12,
     zIndex: 100,
   }),
-  newButton: theme => ({
+  newButton: (theme, numSel) => ({
     paddingRight: 12,
     marginRight: 8,
-    backgroundColor: theme.colors.Blue,
+    backgroundColor: numSel > 0 ? theme.colors.Grey1 : theme.colors.Black,
   }),
   goButton: theme => ({
-    backgroundColor: theme.colors.Grey1,
+    backgroundColor: theme.colors.Black,
     paddingLeft: 12,
   }),
 });

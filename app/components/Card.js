@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Switch,
+  Animated,
   TextInput,
+  Easing,
 } from 'react-native';
 
 import {withTheme} from 'react-native-elements';
@@ -22,15 +24,29 @@ function HomeCounter({
   triggerSubmitTitle,
   setTriggerSubmitTitle,
 }) {
-  // let title, count, selected, id, selectedSlant, description;
-  // if (counter) let { title, count, selected, id, selectedSlant } = counter;
-  // if
-  const {title, count, selected, id, selectedSlant, description} = counter
-    ? counter
-    : setting;
+  const {
+    title,
+    count,
+    selected,
+    id,
+    selectedSlant,
+    description,
+    newCounter,
+  } = counter ? counter : setting;
 
   const [titleValue, setTitleValue] = useState(title);
   const {toggleSelect, editCounter} = useContext(CountersContext);
+  // const heightAnimation = useRef(new Animated.Value(newCounter ? 0 : 300))
+  // .current;
+
+  // useEffect(() => {
+  // Animated.timing(heightAnimation, {
+  //   toValue: 300,
+  //   useNativeDriver: false,
+  //   duration: 2000,
+  //   easing: Easing.inOut(Easing.linear),
+  // }).start();
+  // }, []);
 
   useEffect(() => {
     if (triggerSubmitTitle === id) {
@@ -52,7 +68,7 @@ function HomeCounter({
   };
 
   return (
-    <TouchableOpacity
+    <Animated.View
       style={[
         styles.container(theme),
         selected && styles.containerSelected,
@@ -62,45 +78,71 @@ function HomeCounter({
               rotate: selected ? selectedSlant : '0deg',
             },
           ],
+          // maxHeight: heightAnimation,
         },
-      ]}
-      onPress={() => toggleSelect(id, counter ? true : false)}>
-      {counter ? (
-        <TouchableWithoutFeedback
-          style={([styles.titles], {width: '68%'})}
-          onPress={toggleEditing}>
-          {isEditing === id ? (
-            <TextInput
-              autoFocus={true}
-              value={titleValue}
-              style={styles.titleText}
-              onChangeText={text => setTitleValue(text)}
-              onSubmitEditing={() => submitTitle()}
-              numberOfLines={1}
-            />
-          ) : (
-            <Text numberOfLines={2} style={styles.titleText}>
+      ]}>
+      <TouchableOpacity
+        style={styles.containerTouch}
+        onPress={() => toggleSelect(id, counter ? true : false)}>
+        {counter ? (
+          <TouchableWithoutFeedback
+            style={([styles.titles], {width: '68%'})}
+            onPress={toggleEditing}>
+            {isEditing === id ? (
+              <TextInput
+                autoFocus={true}
+                value={titleValue}
+                style={styles.titleText}
+                onChangeText={text => setTitleValue(text)}
+                onSubmitEditing={() => submitTitle()}
+                numberOfLines={1}
+              />
+            ) : (
+              <Text numberOfLines={2} style={styles.titleText}>
+                {title}
+              </Text>
+            )}
+          </TouchableWithoutFeedback>
+        ) : (
+          <View style={([styles.titles], {width: '85%'})}>
+            <Text numberOfLines={1} style={styles.titleText}>
               {title}
             </Text>
-          )}
-        </TouchableWithoutFeedback>
-      ) : (
-        <View style={([styles.titles], {width: '85%'})}>
-          <Text numberOfLines={1} style={styles.titleText}>
-            {title}
-          </Text>
-          <Text numberOfLines={1} style={styles.descText}>
-            {description}
-          </Text>
-        </View>
-      )}
-      {counter ? (
-        <>
-          <View
-            style={[
-              styles.rightContainer(theme),
-              selected && styles.rightContainerSelected(theme),
-            ]}>
+            <Text numberOfLines={1} style={styles.descText}>
+              {description}
+            </Text>
+          </View>
+        )}
+        {counter ? (
+          <>
+            <View
+              style={[
+                styles.rightContainer(theme),
+                selected && styles.rightContainerSelected(theme),
+              ]}>
+              <Switch
+                trackColor={{
+                  false: theme.colors.LightGrey,
+                  true: theme.colors.MidBlue,
+                }}
+                thumbColor={
+                  selected ? theme.colors.Blue : theme.colors.PureWhite
+                }
+                value={selected}
+                onValueChange={() => toggleSelect(id, true)}
+              />
+              <Text numberOfLines={1} style={styles.countText}>
+                {count}
+              </Text>
+            </View>
+            {isEditing === id && (
+              <TouchableWithoutFeedback onPress={() => submitTitle()}>
+                <View style={styles.titleTextWrapper}></View>
+              </TouchableWithoutFeedback>
+            )}
+          </>
+        ) : (
+          <View style={[styles.rightContainerSettings]}>
             <Switch
               trackColor={{
                 false: theme.colors.LightGrey,
@@ -108,32 +150,12 @@ function HomeCounter({
               }}
               thumbColor={selected ? theme.colors.Blue : theme.colors.PureWhite}
               value={selected}
-              onValueChange={() => toggleSelect(id, true)}
+              onValueChange={() => toggleSelect(id, false)}
             />
-            <Text numberOfLines={1} style={styles.countText}>
-              {count}
-            </Text>
           </View>
-          {isEditing === id && (
-            <TouchableWithoutFeedback onPress={() => submitTitle()}>
-              <View style={styles.titleTextWrapper}></View>
-            </TouchableWithoutFeedback>
-          )}
-        </>
-      ) : (
-        <View style={[styles.rightContainerSettings]}>
-          <Switch
-            trackColor={{
-              false: theme.colors.LightGrey,
-              true: theme.colors.MidBlue,
-            }}
-            thumbColor={selected ? theme.colors.Blue : theme.colors.PureWhite}
-            value={selected}
-            onValueChange={() => toggleSelect(id, false)}
-          />
-        </View>
-      )}
-    </TouchableOpacity>
+        )}
+      </TouchableOpacity>
+    </Animated.View>
   );
 }
 
@@ -160,6 +182,13 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     elevation: 10,
     borderRadius: 8,
+  },
+  containerTouch: {
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    width: '100%',
   },
   countText: {fontSize: 24},
   descText: theme => ({fontSize: 18}),

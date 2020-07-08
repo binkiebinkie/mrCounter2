@@ -140,11 +140,9 @@ function Main(props) {
     const keepScreenOn = settings.find(
       setting => setting.id === 'keepScreenOn',
     );
-    console.log(keepScreenOn);
     if (keepScreenOn) setStayAwake(keepScreenOn.selected);
 
     const darkMode = settings.find(setting => setting.id === 'darkMode');
-
     if (darkMode && darkMode.selected) {
       theme.colors = {...darkModeColors};
     }
@@ -173,12 +171,15 @@ function Main(props) {
   // add a new counter with a title
   const addCounter = (title, count) => {
     const newCounter = {
-      title: title ? title : moment().format('MMMM Do, YYYY'),
+      title: title
+        ? title
+        : `${moment().format('MMMM Do, YYYY')} ${counters.length}`,
       count: count >= 0 ? count : 0,
       id: guidGenerator(),
       selected: false,
       incrementAmount: 1,
       selectedSlant: Math.random() > 0.5 ? '-1deg' : '1deg',
+      newCounter: true,
     };
 
     setCounters([newCounter, ...counters]);

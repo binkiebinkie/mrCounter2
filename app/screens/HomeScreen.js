@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     flexDirection: 'column',
     flex: 1,
-    // padding: 8,
     paddingTop: 90,
   }),
   containerView: theme => ({
