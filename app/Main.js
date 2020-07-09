@@ -223,7 +223,6 @@ function Main(props) {
 
     setCounters(newCounters);
   };
-  console.log(stayAwake, 'stayAwake');
 
   return (
     <ThemeProvider theme={theme}>

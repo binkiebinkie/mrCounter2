@@ -6,7 +6,7 @@ import {withTheme} from 'react-native-elements';
 
 function SectionTitle({sectionTitle, theme}) {
   const {counters, settings, numSelCounters} = useContext(CountersContext);
-  console.log(numSelCounters);
+
   return (
     <View style={styles.container(theme)}>
       <Text style={styles.title(theme, numSelCounters.length)}>

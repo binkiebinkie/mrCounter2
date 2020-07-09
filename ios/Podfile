@@ -77,6 +77,8 @@ target 'mrCounter' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'ReactNativeART', :path => '../node_modules/@react-native-community/art'
+
   target 'mrCounterTests' do
     inherit! :complete
     # Pods for testing
