@@ -107,11 +107,7 @@ function HomeCounter({
         )}
         {counter ? (
           <>
-            <View
-              style={[
-                styles.rightContainer(theme),
-                // selected && styles.rightContainerSelected(theme),
-              ]}>
+            <View style={[styles.rightContainer(theme)]}>
               <ShadowFlex
                 inner
                 useArt

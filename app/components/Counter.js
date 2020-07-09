@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import {ShadowFlex} from 'react-native-neomorph-shadows';
 import {
   StyleSheet,
   Text,
@@ -80,19 +81,19 @@ function Counter({counter, index, theme}) {
             </Text>
             <View style={styles.countSquare(theme)}></View>
           </View>
-          <Text
-            adjustsFontSizeToFit
-            numberOfLines={1}
-            style={[
-              styles.countText(theme),
-              {
-                // fontSize: compWidth / count.toString().length
-                fontSize: Math.floor(compHeight * numString),
-                // lineHeight: compHeight * numString
-              },
-            ]}>
-            {count}
-          </Text>
+          <ShadowFlex inner useArt style={styles.countTextShadow(theme)}>
+            <Text
+              adjustsFontSizeToFit
+              numberOfLines={1}
+              style={[
+                styles.countText(theme),
+                {fontSize: Math.floor(compHeight * numString)},
+              ]}>
+              {count}
+            </Text>
+            <View style={[styles.countTextCornerLeft(theme)]}></View>
+            <View style={[styles.countTextCornerRight(theme)]}></View>
+          </ShadowFlex>
         </View>
       </View>
       <View
@@ -107,6 +108,7 @@ function Counter({counter, index, theme}) {
           },
         ]}>
         <View style={[styles.thButtonContainer(theme), {marginBottom: '2%'}]}>
+          <View style={[styles.countTextCornerLeft(theme)]}></View>
           <Image
             source={require('../assets/Plus.png')}
             style={{width: 28, height: 28, zIndex: 1000}}
@@ -122,13 +124,12 @@ function Counter({counter, index, theme}) {
             source={require('../assets/Minus.png')}
             style={{width: 28, height: 4, zIndex: 1000}}
           />
-          {/* <View style={[styles.thButton(theme)]}> */}
           <TouchableHighlight
             style={[styles.thButton(theme)]}
             onPress={() => changeCount(false)}>
             <View></View>
           </TouchableHighlight>
-          {/* </View> */}
+          <View style={[styles.countTextCornerRight(theme)]}></View>
         </View>
       </View>
     </View>
@@ -172,7 +173,7 @@ const styles = StyleSheet.create({
   countSquare: theme => ({
     width: 36,
     height: 36,
-    backgroundColor: theme.colors.LightGrey,
+    backgroundColor: theme.colors.ScreenGreen0,
     borderRadius: 4,
     shadowColor: 'black',
     shadowRadius: 10,
@@ -181,7 +182,7 @@ const styles = StyleSheet.create({
   countTitle: theme => ({
     fontSize: 20,
     zIndex: 100,
-    backgroundColor: theme.colors.LightGrey,
+    backgroundColor: theme.colors.ScreenGreen0,
     borderRadius: 4,
     shadowColor: 'black',
     shadowRadius: 10,
@@ -195,13 +196,44 @@ const styles = StyleSheet.create({
     flex: 1,
     flexWrap: 'wrap',
     textAlignVertical: 'center',
-    backgroundColor: theme.colors.LightGrey,
-    borderRadius: 4,
+    backgroundColor: theme.colors.ScreenGreen0,
     shadowColor: 'black',
     shadowRadius: 10,
     shadowOpacity: 1,
     paddingRight: 12,
     textAlign: 'right',
+    borderRadius: 4,
+    position: 'relative',
+  }),
+  countTextShadow: theme => ({
+    shadowOffset: {width: 0, height: 6},
+    shadowOpacity: 1,
+    shadowColor: theme.colors.Grey4,
+    shadowRadius: 12,
+    flex: 1,
+    borderRadius: 4,
+    elevation: 1,
+    backgroundColor: theme.colors.ScreenGreen0,
+  }),
+  countTextCornerLeft: theme => ({
+    position: 'absolute',
+    borderBottomWidth: 6,
+    borderLeftWidth: 6,
+    borderRightColor: 'transparent',
+    borderBottomColor: 'transparent',
+    borderLeftColor: theme.colors.Grey2,
+    top: 0,
+    left: 0,
+  }),
+  countTextCornerRight: theme => ({
+    position: 'absolute',
+    borderTopWidth: 6,
+    borderRightWidth: 6,
+    borderTopColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderRightColor: theme.colors.Grey2,
+    bottom: 0,
+    right: 0,
   }),
   incButton: theme => ({
     textAlign: 'center',
@@ -215,7 +247,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     borderRadius: 4,
-    // backgroundColor: theme.colors.Darkest,
     zIndex: 100000,
   }),
   thButtonContainer: theme => ({
