@@ -751,11 +751,7 @@ function Header({navigation, theme}) {
           barStyle="light-content"
         />
 
-        <BlurView
-          blurType={'light'}
-          // blurType={numSel > 0 ? 'light' : 'dark'}
-          // intensity={50}
-          style={[styles.blurView]}></BlurView>
+        <BlurView blurType={'light'} style={[styles.blurView]}></BlurView>
       </Animated.View>
     </View>
   );

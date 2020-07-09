@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   container: theme => ({
     flex: 1,
     // backgroundColor: theme.colors.Black,
-    padding: 8,
+    paddingBottom: 8,
     paddingTop: 12,
     flexDirection: 'column',
   }),

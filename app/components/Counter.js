@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
   }),
   countTextCornerLeft: theme => ({
     position: 'absolute',
-    borderBottomWidth: 6,
-    borderLeftWidth: 6,
+    borderBottomWidth: 8,
+    borderLeftWidth: 8,
     borderRightColor: 'transparent',
     borderBottomColor: 'transparent',
     borderLeftColor: theme.colors.Grey2,
@@ -227,8 +227,8 @@ const styles = StyleSheet.create({
   }),
   countTextCornerRight: theme => ({
     position: 'absolute',
-    borderTopWidth: 6,
-    borderRightWidth: 6,
+    borderTopWidth: 8,
+    borderRightWidth: 8,
     borderTopColor: 'transparent',
     borderRightColor: 'transparent',
     borderRightColor: theme.colors.Grey2,

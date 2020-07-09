@@ -10,6 +10,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
+import {BlurView} from '@react-native-community/blur';
 import {CountersContext} from '../state/CountersContext';
 import {withTheme} from 'react-native-elements';
 
@@ -115,7 +116,7 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
       }).start();
 
       Animated.timing(delLeft, {
-        toValue: 0,
+        toValue: containerMargin,
         useNativeDriver: false,
         duration,
         easing: Easing.inOut(Easing.linear),
@@ -129,7 +130,7 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
     }
     if (shouldDelete) {
       Animated.timing(delLeft, {
-        toValue: 0,
+        toValue: containerMargin,
         useNativeDriver: false,
         duration,
         easing: Easing.inOut(Easing.linear),
@@ -174,96 +175,82 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
   };
 
   return (
-    <>
-      <View style={styles.buttonContainer}>
-        <Animated.View
-          style={[
-            styles.bottomButton,
-            styles.delButton(theme),
-            {
-              opacity: shouldDelete ? 1 : goOpacity,
-              left: delLeft,
-              position: delLeft === 0 ? 'relative' : 'absolute',
-              width: delWidth,
-            },
-          ]}
-          disabled={numSel < 1 ? true : false}>
-          <View
-            style={[
-              {backgroundColor: theme.colors.Grey3},
-              styles.actionButton,
-            ]}>
-            <Image
-              source={require(`../assets/Trash.png`)}
-              style={styles.buttonImg}
-            />
-          </View>
-          <Text style={styles.buttonText}>
-            {shouldDelete ? `Delete ${numSel} Counters` : ''}
-          </Text>
-          <TouchableOpacity
-            style={styles.buttonPress}
-            onPress={() => shouldDeleteCounters()}
+    <View style={styles.buttonContainer}>
+      <BlurView blurType={'light'} style={[styles.blurView]}></BlurView>
+      <Animated.View
+        style={[
+          styles.bottomButton,
+          styles.delButton(theme),
+          {
+            opacity: shouldDelete ? 1 : goOpacity,
+            left: delLeft,
+            position: delLeft === containerMargin ? 'relative' : 'absolute',
+            width: delWidth,
+          },
+        ]}
+        disabled={numSel < 1 ? true : false}>
+        <View
+          style={[{backgroundColor: theme.colors.Grey3}, styles.actionButton]}>
+          <Image
+            source={require(`../assets/Trash.png`)}
+            style={styles.buttonImg}
           />
-        </Animated.View>
-        <Animated.View
-          style={[
-            styles.bottomButton,
-            styles.newButton(theme, numSel),
-            {
-              width: newWidth,
-              marginLeft:
-                numSel > 0
-                  ? shouldDelete
-                    ? screenWidth
-                    : 8 + delDimensions
-                  : 0,
-              opacity: newOpacity,
-            },
-          ]}>
-          <View
-            style={[
-              styles.actionButton,
-              {backgroundColor: theme.colors.Grey3},
-            ]}>
-            <Image
-              source={require(`../assets/Plus.png`)}
-              style={styles.buttonImg}
-            />
-          </View>
-          <Text style={styles.buttonText}>
-            {numSel > 0 ? '' : 'Add New Counter'}
-          </Text>
-          <TouchableOpacity
-            style={styles.buttonPress}
-            onPress={() => addCounter()}
+        </View>
+        <Text style={styles.buttonText}>
+          {shouldDelete ? `Delete ${numSel} Counters` : ''}
+        </Text>
+        <TouchableOpacity
+          style={styles.buttonPress}
+          onPress={() => shouldDeleteCounters()}
+        />
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.bottomButton,
+          styles.newButton(theme, numSel),
+          {
+            width: newWidth,
+            marginLeft:
+              numSel > 0 ? (shouldDelete ? screenWidth : 8 + delDimensions) : 0,
+            opacity: newOpacity,
+          },
+        ]}>
+        <View
+          style={[styles.actionButton, {backgroundColor: theme.colors.Grey3}]}>
+          <Image
+            source={require(`../assets/Plus.png`)}
+            style={styles.buttonImg}
           />
-        </Animated.View>
-        <Animated.View
-          style={[
-            styles.bottomButton,
-            styles.goButton(theme),
-            {width: goWidth, opacity: goOpacity},
-          ]}
-          disabled={numSel < 1 ? true : false}>
-          <Text style={styles.buttonText}>Go Count</Text>
-          <View
-            style={[
-              {backgroundColor: theme.colors.Grey3},
-              styles.actionButton,
-            ]}>
-            <Image
-              source={require(`../assets/Forward.png`)}
-              style={styles.buttonImg}
-            />
-          </View>
-          <TouchableOpacity
-            style={styles.buttonPress}
-            onPress={() => navigation.navigate('Counters')}
+        </View>
+        <Text style={styles.buttonText}>
+          {numSel > 0 ? '' : 'Add New Counter'}
+        </Text>
+        <TouchableOpacity
+          style={styles.buttonPress}
+          onPress={() => addCounter()}
+        />
+      </Animated.View>
+      <Animated.View
+        style={[
+          styles.bottomButton,
+          styles.goButton(theme),
+          {width: goWidth, opacity: goOpacity},
+        ]}
+        disabled={numSel < 1 ? true : false}>
+        <Text style={styles.buttonText}>Go Count</Text>
+        <View
+          style={[{backgroundColor: theme.colors.Grey3}, styles.actionButton]}>
+          <Image
+            source={require(`../assets/Forward.png`)}
+            style={styles.buttonImg}
           />
-        </Animated.View>
-      </View>
-    </>
+        </View>
+        <TouchableOpacity
+          style={styles.buttonPress}
+          onPress={() => navigation.navigate('Counters')}
+        />
+      </Animated.View>
+    </View>
   );
 }
 
@@ -285,11 +272,20 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     position: 'absolute',
-    left: containerMargin,
-    right: containerMargin,
+    padding: containerMargin,
     bottom: '5%',
     flexDirection: 'row',
+    overflow: 'hidden',
+    borderRadius: 5,
     justifyContent: 'space-between',
+  },
+  blurView: {
+    padding: containerMargin,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
   },
   buttonPress: {
     position: 'absolute',
@@ -297,6 +293,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    borderRadius: 8,
+    opacity: 0.5,
     borderRadius: 8,
   },
   buttonImg: {
@@ -314,6 +312,7 @@ const styles = StyleSheet.create({
     height: delDimensions,
     paddingRight: 12,
     zIndex: 100,
+    top: containerMargin,
   }),
   newButton: (theme, numSel) => ({
     paddingRight: 12,

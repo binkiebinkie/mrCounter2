@@ -143,10 +143,12 @@ function HomeCounter({
           <View style={[styles.rightContainerSettings]}>
             <Switch
               trackColor={{
-                false: theme.colors.LightGrey,
-                true: theme.colors.MidBlue,
+                false: theme.colors.Grey4,
+                true: theme.colors.Grey3,
               }}
-              thumbColor={selected ? theme.colors.Blue : theme.colors.PureWhite}
+              thumbColor={
+                selected ? theme.colors.Black : theme.colors.PureWhite
+              }
               value={selected}
               onValueChange={() => toggleSelect(id, false)}
             />

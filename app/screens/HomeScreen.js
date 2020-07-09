@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     flex: 1,
-    paddingBottom: 115,
+    paddingBottom: 125,
     minHeight: '100%',
   }),
   counterContainer: {
