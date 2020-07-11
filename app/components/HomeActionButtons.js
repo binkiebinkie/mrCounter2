@@ -16,7 +16,7 @@ import {withTheme} from 'react-native-elements';
 
 const screenWidth = Math.floor(Dimensions.get('window').width);
 const containerMargin = 8;
-const delDimensions = 43;
+const delDimensions = 40;
 const duration = 200;
 
 function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
@@ -254,8 +254,8 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
 //rnss
 const styles = StyleSheet.create({
   actionButton: {
-    width: 35,
-    height: 35,
+    width: 32,
+    height: 32,
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
@@ -266,6 +266,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderRadius: 8,
     padding: 4,
+    maxHeight: 40,
   },
   buttonContainer: {
     position: 'absolute',

@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     marginRight: 8,
     marginLeft: 8,
+    borderRadius: 4,
   }),
   containerSelected: (selectedSlant) => ({
     shadowColor: '#000000',
