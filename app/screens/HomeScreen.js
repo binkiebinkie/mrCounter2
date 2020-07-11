@@ -65,7 +65,7 @@ function HomeScreen({navigation, theme}) {
                 : null}
               <View
                 style={{
-                  height: 60,
+                  height: 80,
                   width: '100%',
                   opacity: 0,
                 }}></View>

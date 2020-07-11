@@ -127,6 +127,12 @@ function Main(props) {
               },
             ],
       );
+
+      const numSelected = counters
+        .map((counter) => (counter.selected ? counter.id : null))
+        .filter((counterId) => counterId !== null);
+
+      setNumSelCounters([...numSelected]);
     }
     fetchData();
   }, []);
@@ -182,6 +188,12 @@ function Main(props) {
     );
 
     setCounters(removeSelectedArray);
+
+    const numSelected = removeSelectedArray
+      .map((counter) => (counter.selected ? counter.id : null))
+      .filter((counterId) => counterId !== null);
+
+    setNumSelCounters([...numSelected]);
   };
 
   const toggleSelect = (id, isCounter) => {
