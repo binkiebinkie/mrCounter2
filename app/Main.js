@@ -131,10 +131,6 @@ function Main(props) {
     fetchData();
   }, []);
 
-  useEffect(() => countSelectedThenSet(), [counters]);
-  // NOTE Hooks can't listen for nested object changes
-  // thus, when editing a nested object we must call
-  // countSelectedThenSet() directly
   useEffect(() => {
     async function saveStorage() {
       saveToStorage();
@@ -159,24 +155,6 @@ function Main(props) {
       numSelCounters,
       settings,
     });
-
-  // ensure number of selected state is accurate
-  const countSelectedThenSet = () => {
-    let numSelected = [];
-    let countersCopy = [...counters];
-    // console.log('countersCopy', countersCopy);
-    if (counters) {
-      numSelected = countersCopy.reduce((result, counter) => {
-        if (counter.selected) {
-          result.push(counter.id);
-        }
-        return result;
-      }, []);
-      // console.log('numSelected', numSelected);
-      setNumSelCounters([...numSelected]);
-      saveToStorage();
-    }
-  };
 
   // add a new counter with a title
   const addCounter = (title, count) => {
@@ -206,7 +184,6 @@ function Main(props) {
     setCounters(removeSelectedArray);
   };
 
-  // find counter or setting by id then toggle selected state
   const toggleSelect = (id, isCounter) => {
     const arrToMap = isCounter ? [...counters] : [...settings];
     const newArr = arrToMap.map((obj, i) => {
@@ -214,9 +191,14 @@ function Main(props) {
       return {...obj, selected: !obj.selected};
     });
     if (isCounter) {
-      // console.log('setCounters', newArr);
       setCounters([...newArr]);
-      setTimeout(() => countSelectedThenSet(), 15);
+
+      const numSelected = newArr
+        .map((counter) => (counter.selected ? counter.id : null))
+        .filter((counterId) => counterId !== null);
+
+      setNumSelCounters([...numSelected]);
+      saveToStorage();
     } else {
       setSettings([...newArr]);
     }
@@ -234,8 +216,6 @@ function Main(props) {
     newCounters[indexOfCounter] = newCounter;
 
     setCounters(newCounters);
-    countSelectedThenSet();
-    setTimeout(() => countSelectedThenSet(), 15);
   };
 
   return (
@@ -245,7 +225,7 @@ function Main(props) {
           counters,
           setCounters,
           numSelCounters,
-          countSelectedThenSet,
+          // countSelectedThenSet,
           addCounter,
           removeCounters,
           toggleSelect,

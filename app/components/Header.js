@@ -19,9 +19,7 @@ const screenWidth = Math.floor(Dimensions.get('window').width);
 function Header({navigation, theme}) {
   const {numSelCounters} = useContext(CountersContext);
   const numSel = numSelCounters.length;
-
-  const eyePos = useRef(new Animated.Value(50)).current;
-  const eyeLidPos = useRef(new Animated.Value(1)).current;
+  console.log(numSelCounters);
   const eyeWidth = useRef(new Animated.Value(0)).current;
   const eyeRingSizeOp1 = useRef(new Animated.Value(0)).current;
   const eyeRingSizeOp2 = useRef(new Animated.Value(0)).current;
@@ -36,462 +34,423 @@ function Header({navigation, theme}) {
   const eyeballWidth = useRef(new Animated.Value(4)).current;
   const outlineHeight = useRef(new Animated.Value(15)).current;
   const blurViewTop = useRef(new Animated.Value(0)).current;
-  useEffect(() => {
-    if (numSel === 0) {
-      console.log('numSel0', numSel, numSelCounters);
+  if (numSel === 0) {
+    Animated.timing(eyeballWidth, {
+      toValue: 4,
+      useNativeDriver: false,
+      duration: 300,
+      delay: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyePos, {
-        toValue: 50,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    // Eyelid bg closing (whites of eyes)
+    Animated.timing(eyeWidth, {
+      toValue: 4,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.linear,
+    }).start();
 
-      Animated.timing(eyeballWidth, {
-        toValue: 4,
-        useNativeDriver: false,
-        duration: 300,
-        delay: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(outlineHeight, {
+      toValue: 15,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      // Eyelid moving down
-      Animated.timing(eyeLidPos, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(blurViewTop, {
+      toValue: -300,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      // Eyelid bg closing (whites of eyes)
-      Animated.timing(eyeWidth, {
-        toValue: 4,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.linear,
-      }).start();
+    Animated.timing(eyeRingSizeOp1, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(outlineHeight, {
-        toValue: 15,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp2, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(blurViewTop, {
-        toValue: -300,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp3, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 400,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp1, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    // make eye rings retract
+    Animated.timing(eyeRingSize1, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp2, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize2, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(eyeRingSize3, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp3, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 400,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize4, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      // make eye rings retract
-      Animated.timing(eyeRingSize1, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize5, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize2, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(eyeRingSize3, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize6, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize4, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(settingsSpin, {
+      toValue: 0,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  }
 
-      Animated.timing(eyeRingSize5, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+  if (numSel >= 1) {
+    Animated.timing(blurViewTop, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize6, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeballWidth, {
+      toValue: 12,
+      useNativeDriver: false,
+      delay: 100,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(settingsSpin, {
-        toValue: 0,
-        duration: 300,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }).start();
-    }
-    if (numSel >= 1) {
-      console.log('numSel1', numSel, numSelCounters);
+    Animated.timing(outlineHeight, {
+      toValue: 40,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      // Eyeball moving up
-      Animated.timing(eyePos, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(settingsSpin, {
+      toValue: 1,
+      duration: 300,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  }
 
-      Animated.timing(eyeballWidth, {
-        toValue: 12,
-        useNativeDriver: false,
-        delay: 100,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+  if (numSel === 1) {
+    // EyeBg opening
+    Animated.timing(eyeWidth, {
+      toValue: 12,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.linear,
+    }).start();
 
-      // Eyelid moving up
-      Animated.timing(eyeLidPos, {
-        toValue: -1,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp1, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      // EyeBg opening
-      Animated.timing(eyeWidth, {
-        toValue: 12,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.linear,
-      }).start();
+    Animated.timing(eyeRingSizeOp2, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(outlineHeight, {
-        toValue: 40,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp3, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 400,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(blurViewTop, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize1, {
+      toValue: 12,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp1, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize2, {
+      toValue: 16,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp2, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize3, {
+      toValue: 12,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp3, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 400,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize4, {
+      toValue: 12,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize1, {
-        toValue: 12,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize5, {
+      toValue: 12,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize2, {
-        toValue: 16,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize6, {
+      toValue: 12,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+  }
 
-      Animated.timing(eyeRingSize3, {
-        toValue: 12,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+  if (numSel === 2) {
+    Animated.timing(eyeWidth, {
+      toValue: 20,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.linear,
+    }).start();
 
-      Animated.timing(eyeRingSize4, {
-        toValue: 12,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp1, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize5, {
-        toValue: 12,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp2, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize6, {
-        toValue: 12,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp3, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration: 400,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(settingsSpin, {
-        toValue: 1,
-        duration: 300,
-        easing: Easing.linear,
-        useNativeDriver: true,
-      }).start();
-    }
+    Animated.timing(eyeRingSize1, {
+      toValue: 20,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-    if (numSel >= 2) {
-      console.log('numSel2', numSel, numSelCounters);
+    Animated.timing(eyeRingSize2, {
+      toValue: 24,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeWidth, {
-        toValue: 20,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.linear,
-      }).start();
+    Animated.timing(eyeRingSize3, {
+      toValue: 28,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp1, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize4, {
+      toValue: 32,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp2, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize5, {
+      toValue: 20,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSizeOp3, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration: 400,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize6, {
+      toValue: 20,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+  }
 
-      Animated.timing(eyeRingSize1, {
-        toValue: 20,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+  if (numSel === 3) {
+    Animated.timing(eyeWidth, {
+      toValue: 24,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.linear,
+    }).start();
 
-      Animated.timing(eyeRingSize2, {
-        toValue: 24,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp1, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(eyeRingSizeOp2, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(eyeRingSizeOp3, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize3, {
-        toValue: 28,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize1, {
+      toValue: 24,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize4, {
-        toValue: 32,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize2, {
+      toValue: 28,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize5, {
-        toValue: 20,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize3, {
+      toValue: 32,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize6, {
-        toValue: 20,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-    }
+    Animated.timing(eyeRingSize4, {
+      toValue: 36,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-    if (numSel === 3) {
-      console.log('numSel3', numSel, numSelCounters);
+    Animated.timing(eyeRingSize5, {
+      toValue: 24,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeWidth, {
-        toValue: 24,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.linear,
-      }).start();
+    Animated.timing(eyeRingSize6, {
+      toValue: 24,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+  }
+  if (numSel >= 4) {
+    Animated.timing(eyeWidth, {
+      toValue: 32,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.linear,
+    }).start();
 
-      Animated.timing(eyeRingSizeOp1, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(eyeRingSizeOp2, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(eyeRingSizeOp3, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSizeOp1, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(eyeRingSizeOp2, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(eyeRingSizeOp3, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration: 100,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize1, {
-        toValue: 24,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize1, {
+      toValue: 32,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize2, {
-        toValue: 28,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize2, {
+      toValue: 36,
+      useNativeDriver: false,
+      duration: 200,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize3, {
-        toValue: 32,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize3, {
+      toValue: 40,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize4, {
-        toValue: 36,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize4, {
+      toValue: 44,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize5, {
-        toValue: 24,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(eyeRingSize5, {
+      toValue: 48,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(eyeRingSize6, {
-        toValue: 24,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-    }
-    if (numSel >= 4) {
-      console.log('numSel4', numSel, numSelCounters);
-
-      Animated.timing(eyeWidth, {
-        toValue: 32,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.linear,
-      }).start();
-
-      Animated.timing(eyeRingSizeOp1, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(eyeRingSizeOp2, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(eyeRingSizeOp3, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration: 100,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-
-      Animated.timing(eyeRingSize1, {
-        toValue: 32,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-
-      Animated.timing(eyeRingSize2, {
-        toValue: 36,
-        useNativeDriver: false,
-        duration: 200,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-
-      Animated.timing(eyeRingSize3, {
-        toValue: 40,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-
-      Animated.timing(eyeRingSize4, {
-        toValue: 44,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-
-      Animated.timing(eyeRingSize5, {
-        toValue: 48,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-
-      Animated.timing(eyeRingSize6, {
-        toValue: 52,
-        useNativeDriver: false,
-        duration: 300,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-    }
-  }, [numSel]);
+    Animated.timing(eyeRingSize6, {
+      toValue: 52,
+      useNativeDriver: false,
+      duration: 300,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+  }
+  // });
 
   const spin = settingsSpin.interpolate({
     inputRange: [0, 1],
