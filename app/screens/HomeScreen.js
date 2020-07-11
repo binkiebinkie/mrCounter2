@@ -6,10 +6,9 @@ import {
   ScrollView,
   ImageBackground,
   Text,
-  TouchableOpacity,
-  StatusBar,
   TouchableWithoutFeedback,
 } from 'react-native';
+import introMessages from '../config/introMessages';
 import Card from '../components/Card';
 import HomeActionButtons from '../components/HomeActionButtons';
 import Header from '../components/Header';
@@ -18,6 +17,7 @@ import {BlurView} from '@react-native-community/blur';
 
 import {CountersContext} from '../state/CountersContext';
 import {withTheme} from 'react-native-elements';
+import SectionTitleBottom from '../components/SectionTitleBottom';
 
 //rsf
 function HomeScreen({navigation, theme}) {
@@ -32,7 +32,7 @@ function HomeScreen({navigation, theme}) {
     setIsEditing('');
   };
   const darkMode = settings.find((setting) => setting.id === 'darkMode');
-
+  console.log(numSelCounters);
   return (
     <SafeAreaView style={styles.safeArea(theme)}>
       <ImageBackground
@@ -43,39 +43,42 @@ function HomeScreen({navigation, theme}) {
         }
         style={styles.appBg}>
         <Header navigation={navigation} />
-        {/* { numSelCounters === 0 ? (
-          <IntroScreen />
-        ) : ( */}
         <ScrollView style={styles.container(theme)}>
           <View style={styles.containerView(theme)}>
             <SectionTitle sectionTitle={'Most recent'} />
             <View style={styles.counterContainer}>
-              {counters
-                ? counters.map((counter, i) => (
-                    <Card
-                      key={i}
-                      counter={counter}
-                      index={i}
-                      isEditing={isEditing}
-                      setIsEditing={setIsEditing}
-                      triggerSubmitTitle={triggerSubmitTitle}
-                      setTriggerSubmitTitle={setTriggerSubmitTitle}
-                    />
-                  ))
-                : null}
-              <View
-                style={{
-                  height: 80,
-                  width: '100%',
-                  opacity: 0,
-                }}></View>
+              {counters.length === 0 ? (
+                <Text style={styles.introMessage(theme)}>
+                  "
+                  {
+                    introMessages[
+                      Math.floor(Math.random() * introMessages.length)
+                    ]
+                  }
+                  "
+                </Text>
+              ) : counters ? (
+                counters.map((counter, i) => (
+                  <Card
+                    key={i}
+                    counter={counter}
+                    index={i}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    triggerSubmitTitle={triggerSubmitTitle}
+                    setTriggerSubmitTitle={setTriggerSubmitTitle}
+                  />
+                ))
+              ) : null}
+              <View style={styles.emptyCard}>
+                <SectionTitleBottom />
+              </View>
             </View>
           </View>
         </ScrollView>
         <View style={styles.blurViewContainer}>
           <BlurView blurType={'light'} style={[styles.blurView]}></BlurView>
         </View>
-        {/* )} */}
         <HomeActionButtons
           navigation={navigation}
           setShouldDelete={setShouldDelete}
@@ -153,6 +156,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
   },
+  emptyCard: {
+    height: 76,
+    marginTop: 4,
+    width: '100%',
+  },
+  introMessage: (theme) => ({
+    width: '100%',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    padding: 24,
+    paddingLeft: 48,
+    paddingRight: 48,
+    color: theme.colors.Grey1,
+  }),
   safeArea: (theme) => ({
     backgroundColor: theme.colors.Black,
     flex: 1,
