@@ -11,6 +11,7 @@ import {
 import {withTheme} from 'react-native-elements';
 // import { TouchableHighlight } from "react-native-gesture-handler";
 import {CountersContext} from '../state/CountersContext';
+import {relativeTimeRounding} from 'moment';
 const screenHeight = Math.floor(Dimensions.get('window').height);
 // const windowHeight = Dimensions.get("window").height;
 
@@ -26,10 +27,10 @@ function Counter({counter, index, theme}) {
   const [compWidth, setCompWidth] = useState(0);
   const {title, count, selected, id, incrementAmount} = counter;
 
-  const leftHanded = settings.find(setting => setting.id === 'leftHanded')
+  const leftHanded = settings.find((setting) => setting.id === 'leftHanded')
     .selected;
 
-  const changeCount = increment =>
+  const changeCount = (increment) =>
     setCounters(
       counters.map((counter, i) => {
         if (counter.id !== id) return counter;
@@ -51,7 +52,7 @@ function Counter({counter, index, theme}) {
         {
           paddingBottom: selLength === index ? 0 : 8,
           height: `${selLength >= 4 ? 25 : (100 - selLength) / selLength}%`,
-          maxHeight: selLength >= 4 ? screenHeight * 0.21 : screenHeight,
+          maxHeight: selLength >= 4 ? screenHeight * 0.22 : screenHeight,
           flexDirection:
             selLength === 1 ? 'column' : leftHanded ? 'row-reverse' : 'row',
         },
@@ -62,38 +63,47 @@ function Counter({counter, index, theme}) {
           {
             marginBottom: selLength === 1 ? 12 : 0,
             height: selLength === 1 ? '50%' : '100%',
-
-            // flexDirection: selLength === 1 ? "column" : "row"
           },
         ]}
-        onLayout={e => {
+        onLayout={(e) => {
           const {height, width} = e.nativeEvent.layout;
           setCompHeight(height);
           setCompWidth(width);
         }}>
         <View style={styles.countInnerCont}>
           <View style={styles.countInnerContTop}>
-            <Text
-              adjustsFontSizeToFit
-              numberOfLines={1}
-              style={styles.countTitle(theme)}>
-              {title}
-            </Text>
+            <View style={styles.countTitleContainer(theme)}>
+              <Text
+                adjustsFontSizeToFit
+                numberOfLines={1}
+                style={styles.countTitle(theme)}>
+                {title}
+              </Text>
+            </View>
             <View style={styles.countSquare(theme)}></View>
           </View>
-          <ShadowFlex inner useArt style={styles.countTextShadow(theme)}>
-            <Text
-              adjustsFontSizeToFit
-              numberOfLines={1}
-              style={[
-                styles.countText(theme),
-                {fontSize: Math.floor(compHeight * numString)},
-              ]}>
-              {count}
-            </Text>
+          <View style={styles.countInnerContBottom(theme)}>
+            <ShadowFlex
+              inner
+              useArt
+              style={styles.countTextShadow(theme)}></ShadowFlex>
+            <View style={styles.countTextContainer}>
+              <Text
+                adjustsFontSizeToFit
+                numberOfLines={1}
+                style={[
+                  styles.countText(theme),
+                  {
+                    fontSize: Math.floor(compHeight * numString),
+                    // lineHeight: Math.floor(compHeight / 8),
+                  },
+                ]}>
+                {count}
+              </Text>
+            </View>
             <View style={[styles.countTextCornerLeft(theme)]}></View>
             <View style={[styles.countTextCornerRight(theme)]}></View>
-          </ShadowFlex>
+          </View>
         </View>
       </View>
       <View
@@ -101,7 +111,6 @@ function Counter({counter, index, theme}) {
           styles.buttons(theme),
           {
             flex: selLength === 1 ? 1 : 0,
-
             width: selLength === 1 ? '100%' : '30%',
             marginLeft: selLength === 1 ? 0 : leftHanded ? 0 : 8,
             marginRight: selLength === 1 ? 0 : leftHanded ? 8 : 0,
@@ -138,7 +147,7 @@ function Counter({counter, index, theme}) {
 
 //rnss
 const styles = StyleSheet.create({
-  buttons: theme => ({
+  buttons: (theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -148,74 +157,101 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 5,
   }),
-  container: theme => ({
+  container: (theme) => ({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     flex: 1,
   }),
-  count: theme => ({
+  count: (theme) => ({
     backgroundColor: theme.colors.Grey2,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    textAlignVertical: 'center',
     padding: 5,
-    alignSelf: 'stretch',
     borderRadius: 8,
   }),
-  countInnerCont: {flex: 1, justifyContent: 'flex-end'},
+  countInnerCont: {
+    position: 'relative',
+    flex: 1,
+  },
   countInnerContTop: {
+    position: 'relative',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     width: '100%',
+    height: 36,
     marginBottom: 5,
   },
-  countSquare: theme => ({
+  countInnerContBottom: (theme) => ({
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    minWidth: '100%',
+    flex: 1,
+    height: 36,
+    width: '100%',
+    // width:
+    maxWidth: '100%',
+    backgroundColor: theme.colors.ScreenGreen0,
+  }),
+  countSquare: (theme) => ({
     width: 36,
     height: 36,
     backgroundColor: theme.colors.ScreenGreen0,
     borderRadius: 4,
-    shadowColor: 'black',
-    shadowRadius: 10,
-    shadowOpacity: 1,
   }),
-  countTitle: theme => ({
+  countTitle: (theme) => ({
     fontSize: 20,
     zIndex: 100,
     backgroundColor: theme.colors.ScreenGreen0,
+    flex: 1,
+    textAlignVertical: 'center',
+  }),
+  countTitleContainer: (theme) => ({
+    zIndex: 100,
     borderRadius: 4,
-    shadowColor: 'black',
-    shadowRadius: 10,
-    shadowOpacity: 1,
+    backgroundColor: theme.colors.ScreenGreen0,
     marginRight: 5,
     flex: 1,
     textAlignVertical: 'center',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    flexDirection: 'row',
     paddingLeft: 8,
+    height: 36,
   }),
-  countText: theme => ({
-    flex: 1,
-    flexWrap: 'wrap',
+  countText: (theme) => ({
+    // paddingRight: 12,
+    // borderRadius: 4,
     textAlignVertical: 'center',
-    backgroundColor: theme.colors.ScreenGreen0,
-    shadowColor: 'black',
-    shadowRadius: 10,
-    shadowOpacity: 1,
-    paddingRight: 12,
-    textAlign: 'right',
-    borderRadius: 4,
     position: 'relative',
+    // backgroundColor: 'green',
   }),
-  countTextShadow: theme => ({
+  countTextContainer: {
+    maxWidth: '98%',
+    // height: '100%',
+    // backgroundColor: 'red',
+    // justifyContent: 'center',
+    // alignItems: 'flex-end',
+    // alignSelf: 'center',
+    // flex: 1,
+  },
+  countTextShadow: (theme) => ({
+    position: 'absolute',
     shadowOffset: {width: 0, height: 6},
     shadowOpacity: 1,
-    shadowColor: theme.colors.Grey4,
+    shadowColor: theme.colors.Black,
     shadowRadius: 12,
     flex: 1,
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
     borderRadius: 4,
     elevation: 1,
     backgroundColor: theme.colors.ScreenGreen0,
   }),
-  countTextCornerLeft: theme => ({
+  countTextCornerLeft: (theme) => ({
     position: 'absolute',
     borderBottomWidth: 8,
     borderLeftWidth: 8,
@@ -225,7 +261,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   }),
-  countTextCornerRight: theme => ({
+  countTextCornerRight: (theme) => ({
     position: 'absolute',
     borderTopWidth: 8,
     borderRightWidth: 8,
@@ -235,12 +271,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   }),
-  incButton: theme => ({
+  incButton: (theme) => ({
     textAlign: 'center',
     textAlignVertical: 'center',
     flex: 1,
   }),
-  thButton: theme => ({
+  thButton: (theme) => ({
     position: 'absolute',
     top: 0,
     left: 0,
@@ -249,7 +285,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     zIndex: 100000,
   }),
-  thButtonContainer: theme => ({
+  thButtonContainer: (theme) => ({
     position: 'relative',
     width: '100%',
     height: '49%',

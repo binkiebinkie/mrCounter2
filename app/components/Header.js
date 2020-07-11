@@ -19,7 +19,7 @@ const screenWidth = Math.floor(Dimensions.get('window').width);
 function Header({navigation, theme}) {
   const {numSelCounters} = useContext(CountersContext);
   const numSel = numSelCounters.length;
-  console.log(numSelCounters);
+
   const eyeWidth = useRef(new Animated.Value(0)).current;
   const eyeRingSizeOp1 = useRef(new Animated.Value(0)).current;
   const eyeRingSizeOp2 = useRef(new Animated.Value(0)).current;

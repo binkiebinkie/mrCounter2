@@ -45,125 +45,122 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
     .current;
   const delWidth = useRef(new Animated.Value(delDimensions)).current;
 
-  const calcAnimated = () => {
-    if (numSel === 0) {
-      Animated.timing(goWidth, {
-        toValue: 100,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+  if (numSel === 0) {
+    Animated.timing(goWidth, {
+      toValue: 100,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(newWidth, {
-        toValue: screenWidth - containerMargin * 2,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(newOpacity, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(newWidth, {
+      toValue: screenWidth - containerMargin * 2,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(goOpacity, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(newOpacity, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(delLeft, {
-        toValue: -delDimensions * 2,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(delWidth, {
-        toValue: delDimensions,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-    }
-    if (numSel >= 1) {
-      Animated.timing(goWidth, {
-        toValue: (screenWidth - containerMargin * 4 - delDimensions) * 0.7,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(newOpacity, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(goOpacity, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(newWidth, {
-        toValue: (screenWidth - containerMargin * 4 - delDimensions) * 0.3,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(delLeft, {
+      toValue: -delDimensions * 2,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(delWidth, {
+      toValue: delDimensions,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+  }
+  if (numSel >= 1) {
+    Animated.timing(goWidth, {
+      toValue: (screenWidth - containerMargin * 4 - delDimensions) * 0.7,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(goOpacity, {
-        toValue: 1,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
+    Animated.timing(newOpacity, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-      Animated.timing(delLeft, {
-        toValue: containerMargin,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(delWidth, {
-        toValue: delDimensions,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-    }
-    if (shouldDelete) {
-      Animated.timing(delLeft, {
-        toValue: containerMargin,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(goOpacity, {
-        toValue: 0,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(newWidth, {
-        toValue: 100,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(goWidth, {
-        toValue: 100,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-      Animated.timing(delWidth, {
-        toValue: screenWidth - containerMargin * 2,
-        useNativeDriver: false,
-        duration,
-        easing: Easing.inOut(Easing.linear),
-      }).start();
-    }
-  };
+    Animated.timing(newWidth, {
+      toValue: (screenWidth - containerMargin * 4 - delDimensions) * 0.3,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
 
-  useEffect(() => calcAnimated(), [numSel]);
-  useEffect(() => calcAnimated(), [shouldDelete]);
+    Animated.timing(goOpacity, {
+      toValue: 1,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+
+    Animated.timing(delLeft, {
+      toValue: containerMargin,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(delWidth, {
+      toValue: delDimensions,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+  }
+  if (shouldDelete) {
+    Animated.timing(delLeft, {
+      toValue: containerMargin,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(goOpacity, {
+      toValue: 0,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(newWidth, {
+      toValue: 100,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(goWidth, {
+      toValue: 100,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+    Animated.timing(delWidth, {
+      toValue: screenWidth - containerMargin * 2,
+      useNativeDriver: false,
+      duration,
+      easing: Easing.inOut(Easing.linear),
+    }).start();
+  }
 
   const shouldDeleteCounters = () => {
     if (shouldDelete) {
@@ -175,7 +172,7 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
   };
 
   return (
-    <View style={styles.buttonContainer}>
+    <View style={[styles.buttonContainer, {zIndex: shouldDelete ? 500000 : 0}]}>
       <BlurView blurType={'light'} style={[styles.blurView]}></BlurView>
       <Animated.View
         style={[
@@ -200,7 +197,7 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
           {shouldDelete ? `Delete ${numSel} Counters` : ''}
         </Text>
         <TouchableOpacity
-          style={styles.buttonPress}
+          style={[styles.buttonPress]}
           onPress={() => shouldDeleteCounters()}
         />
       </Animated.View>
@@ -307,7 +304,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  delButton: theme => ({
+  delButton: (theme) => ({
     backgroundColor: theme.colors.Grey1,
     height: delDimensions,
     paddingRight: 12,
@@ -319,7 +316,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
     backgroundColor: numSel > 0 ? theme.colors.Grey1 : theme.colors.Black,
   }),
-  goButton: theme => ({
+  goButton: (theme) => ({
     backgroundColor: theme.colors.Black,
     paddingLeft: 12,
   }),

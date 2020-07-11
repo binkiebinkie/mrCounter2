@@ -30,8 +30,7 @@ function HomeScreen({navigation, theme}) {
     setTriggerSubmitTitle(isEditing);
     setIsEditing('');
   };
-  const darkMode = settings.find(setting => setting.id === 'darkMode');
-  // console.log;
+  const darkMode = settings.find((setting) => setting.id === 'darkMode');
 
   return (
     <SafeAreaView style={styles.safeArea(theme)}>
@@ -103,7 +102,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: 75,
-    backgroundColor: 'red',
     right: 0,
   },
   closeButton: {
@@ -114,13 +112,13 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 10,
   },
-  container: theme => ({
+  container: (theme) => ({
     position: 'relative',
     flexDirection: 'column',
     flex: 1,
     paddingTop: 90,
   }),
-  containerView: theme => ({
+  containerView: (theme) => ({
     position: 'relative',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
   },
-  safeArea: theme => ({
+  safeArea: (theme) => ({
     backgroundColor: theme.colors.Black,
     flex: 1,
   }),
