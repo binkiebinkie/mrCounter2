@@ -36,9 +36,10 @@ function Header({navigation, theme}) {
   const eyeballWidth = useRef(new Animated.Value(4)).current;
   const outlineHeight = useRef(new Animated.Value(15)).current;
   const blurViewTop = useRef(new Animated.Value(0)).current;
-
   useEffect(() => {
     if (numSel === 0) {
+      console.log('numSel0', numSel, numSelCounters);
+
       Animated.timing(eyePos, {
         toValue: 50,
         useNativeDriver: false,
@@ -155,6 +156,8 @@ function Header({navigation, theme}) {
       }).start();
     }
     if (numSel >= 1) {
+      console.log('numSel1', numSel, numSelCounters);
+
       // Eyeball moving up
       Animated.timing(eyePos, {
         toValue: 0,
@@ -273,6 +276,8 @@ function Header({navigation, theme}) {
     }
 
     if (numSel >= 2) {
+      console.log('numSel2', numSel, numSelCounters);
+
       Animated.timing(eyeWidth, {
         toValue: 20,
         useNativeDriver: false,
@@ -345,6 +350,8 @@ function Header({navigation, theme}) {
     }
 
     if (numSel === 3) {
+      console.log('numSel3', numSel, numSelCounters);
+
       Animated.timing(eyeWidth, {
         toValue: 24,
         useNativeDriver: false,
@@ -414,6 +421,8 @@ function Header({navigation, theme}) {
       }).start();
     }
     if (numSel >= 4) {
+      console.log('numSel4', numSel, numSelCounters);
+
       Animated.timing(eyeWidth, {
         toValue: 32,
         useNativeDriver: false,
@@ -768,7 +777,7 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
     maxHeight: '100%',
-    backgroundColor: 'rgba(0,0,0,0)',
+    // backgroundColor: 'rgba(0,0,0,0)',
   },
   blurViewContainer: {
     position: 'absolute',
@@ -799,9 +808,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
     minHeight: 68,
-    // backgroundColor: 'blue',
+    zIndex: 50,
   },
-  contentContainerOutline: theme => ({
+  contentContainerOutline: (theme) => ({
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -815,7 +824,7 @@ const styles = StyleSheet.create({
     zIndex: 500000,
     borderBottomRightRadius: 5,
   }),
-  contentContainerDingus: theme => ({
+  contentContainerDingus: (theme) => ({
     position: 'absolute',
     bottom: -4,
     left: '50%',
@@ -825,7 +834,7 @@ const styles = StyleSheet.create({
     width: 1,
     backgroundColor: theme.colors.Grey3,
   }),
-  eyeBall: theme => ({
+  eyeBall: (theme) => ({
     width: 14,
     height: 14,
     backgroundColor: theme.colors.ScreenGreen3,
@@ -850,7 +859,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  eyeBallPupil: theme => ({
+  eyeBallPupil: (theme) => ({
     width: 4,
     height: 4,
     borderRadius: 50,
@@ -864,7 +873,7 @@ const styles = StyleSheet.create({
     zIndex: 0,
     borderRadius: 50,
   },
-  eyeContainer: theme => ({
+  eyeContainer: (theme) => ({
     position: 'relative',
 
     borderRadius: 50,
@@ -881,7 +890,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   eyeContainerAwake: {backgroundColor: '#FFFFFF'},
-  eyeAwakeRing: theme => ({
+  eyeAwakeRing: (theme) => ({
     position: 'absolute',
     borderRadius: 100,
     borderWidth: 1,
@@ -900,7 +909,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 500000,
   },
-  eyeLid: theme => ({
+  eyeLid: (theme) => ({
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     borderWidth: 1,

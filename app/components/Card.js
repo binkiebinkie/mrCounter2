@@ -56,7 +56,7 @@ function HomeCounter({
   }, [triggerSubmitTitle]);
 
   const toggleEditing = () => {
-    setIsEditing(prevEditing =>
+    setIsEditing((prevEditing) =>
       prevEditing.length > 0 && prevEditing === id ? '' : id,
     );
     if (isEditing === id) titleInput.focus();
@@ -66,7 +66,6 @@ function HomeCounter({
     setIsEditing('');
     editCounter(id, 'title', titleValue);
   };
-  console.log('selected,ss', selected, selectedSlant);
   return (
     <View
       style={[
@@ -85,7 +84,7 @@ function HomeCounter({
                 autoFocus={true}
                 value={titleValue}
                 style={styles.titleText}
-                onChangeText={text => setTitleValue(text)}
+                onChangeText={(text) => setTitleValue(text)}
                 onSubmitEditing={() => submitTitle()}
                 numberOfLines={1}
               />
@@ -110,7 +109,7 @@ function HomeCounter({
             <View style={[styles.rightContainer(theme)]}>
               <ShadowFlex
                 inner
-                useArt
+                useArt={false}
                 style={styles.rightContainerShadow(theme)}>
                 <Switch
                   trackColor={{
@@ -127,8 +126,8 @@ function HomeCounter({
                   {count}
                 </Text>
                 <ShadowFlex
+                  useArt={false}
                   outer
-                  useArt
                   style={styles.rightContainerCorner(theme)}></ShadowFlex>
               </ShadowFlex>
             </View>
@@ -174,7 +173,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
     marginLeft: 8,
   }),
-  containerSelected: selectedSlant => ({
+  containerSelected: (selectedSlant) => ({
     shadowColor: '#000000',
     shadowOffset: {
       width: 2,
@@ -198,8 +197,8 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
   },
-  countText: theme => ({fontSize: 24, color: theme.colors.Black}),
-  descText: theme => ({fontSize: 18}),
+  countText: (theme) => ({fontSize: 24, color: theme.colors.Black}),
+  descText: (theme) => ({fontSize: 18}),
   titles: {
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -220,7 +219,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
-  rightContainer: theme => ({
+  rightContainer: (theme) => ({
     width: '30%',
     borderRadius: 4,
     backgroundColor: theme.colors.ScreenGreen0,
@@ -228,7 +227,7 @@ const styles = StyleSheet.create({
     color: theme.colors.Black,
     justifyContent: 'flex-end',
   }),
-  rightContainerCorner: theme => ({
+  rightContainerCorner: (theme) => ({
     shadowOffset: {width: 0, height: 6},
     shadowOpacity: 1,
     shadowColor: theme.colors.Grey4,
@@ -249,17 +248,17 @@ const styles = StyleSheet.create({
   rightContainerSettings: {
     alignItems: 'flex-start',
   },
-  rightContainerShadow: theme => ({
+  rightContainerShadow: (theme) => ({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 1,
     shadowColor: theme.colors.Grey4,
     shadowRadius: 2,
     flex: 1,
     elevation: 1,
-    height: '100%',
+    // height: '100%',
     borderRadius: 4,
     padding: 8,
-    width: '100%',
+    // width: '100%',
     alignItems: 'flex-end',
   }),
   rowBack: {

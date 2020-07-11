@@ -87,7 +87,7 @@ function Main(props) {
 
   useEffect(() => {
     async function fetchData() {
-      const storageState = await getData().catch(err => console.log(err));
+      const storageState = await getData().catch((err) => console.log(err));
       const {numSelCounters, counters, settings} = storageState;
 
       setCounters(counters);
@@ -132,17 +132,20 @@ function Main(props) {
   }, []);
 
   useEffect(() => countSelectedThenSet(), [counters]);
+  // NOTE Hooks can't listen for nested object changes
+  // thus, when editing a nested object we must call
+  // countSelectedThenSet() directly
   useEffect(() => {
     async function saveStorage() {
       saveToStorage();
     }
 
     const keepScreenOn = settings.find(
-      setting => setting.id === 'keepScreenOn',
+      (setting) => setting.id === 'keepScreenOn',
     );
     if (keepScreenOn) setStayAwake(keepScreenOn.selected);
 
-    const darkMode = settings.find(setting => setting.id === 'darkMode');
+    const darkMode = settings.find((setting) => setting.id === 'darkMode');
     if (darkMode && darkMode.selected) {
       theme.colors = {...darkModeColors};
     }
@@ -160,12 +163,19 @@ function Main(props) {
   // ensure number of selected state is accurate
   const countSelectedThenSet = () => {
     let numSelected = [];
-
-    counters.forEach(counter =>
-      counter.selected === true ? numSelected.push(counter.id) : null,
-    );
-    setNumSelCounters(numSelected);
-    saveToStorage();
+    let countersCopy = [...counters];
+    // console.log('countersCopy', countersCopy);
+    if (counters) {
+      numSelected = countersCopy.reduce((result, counter) => {
+        if (counter.selected) {
+          result.push(counter.id);
+        }
+        return result;
+      }, []);
+      // console.log('numSelected', numSelected);
+      setNumSelCounters([...numSelected]);
+      saveToStorage();
+    }
   };
 
   // add a new counter with a title
@@ -190,7 +200,7 @@ function Main(props) {
     const newCounters = [...counters];
 
     const removeSelectedArray = newCounters.filter(
-      counter => !counter.selected,
+      (counter) => !counter.selected,
     );
 
     setCounters(removeSelectedArray);
@@ -198,30 +208,34 @@ function Main(props) {
 
   // find counter or setting by id then toggle selected state
   const toggleSelect = (id, isCounter) => {
-    const arrToMap = isCounter ? counters : settings;
+    const arrToMap = isCounter ? [...counters] : [...settings];
     const newArr = arrToMap.map((obj, i) => {
       if (obj.id !== id) return obj;
-      const newObj = {...obj};
-      newObj.selected = !obj.selected;
-      return newObj;
+      return {...obj, selected: !obj.selected};
     });
     if (isCounter) {
-      setCounters(newArr);
+      // console.log('setCounters', newArr);
+      setCounters([...newArr]);
+      setTimeout(() => countSelectedThenSet(), 15);
     } else {
-      setSettings(newArr);
+      setSettings([...newArr]);
     }
   };
 
   // edit counter by id
   const editCounter = (id, key, value) => {
     const newCounters = [...counters];
-    const indexOfCounter = newCounters.findIndex(counter => counter.id === id);
+    const indexOfCounter = newCounters.findIndex(
+      (counter) => counter.id === id,
+    );
     const newCounter = {...counters[indexOfCounter]};
     newCounter[key] = value;
 
     newCounters[indexOfCounter] = newCounter;
 
     setCounters(newCounters);
+    countSelectedThenSet();
+    setTimeout(() => countSelectedThenSet(), 15);
   };
 
   return (
@@ -267,7 +281,7 @@ function Main(props) {
 }
 
 const styles = StyleSheet.create({
-  container: theme => ({
+  container: (theme) => ({
     flex: 1,
     width: '100%',
     height: '100%',
