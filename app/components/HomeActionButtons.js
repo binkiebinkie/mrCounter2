@@ -172,7 +172,7 @@ function HomeActionButtons({navigation, theme, shouldDelete, setShouldDelete}) {
   };
 
   return (
-    <View style={[styles.buttonContainer, {zIndex: shouldDelete ? 500000 : 0}]}>
+    <View style={[styles.buttonContainer, {zIndex: shouldDelete ? 500 : 0}]}>
       <BlurView blurType={'light'} style={[styles.blurView]}></BlurView>
       <Animated.View
         style={[

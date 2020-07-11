@@ -190,7 +190,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 36,
     width: '100%',
-    // width:
     maxWidth: '100%',
     backgroundColor: theme.colors.ScreenGreen0,
   }),
@@ -221,20 +220,12 @@ const styles = StyleSheet.create({
     height: 36,
   }),
   countText: (theme) => ({
-    // paddingRight: 12,
-    // borderRadius: 4,
     textAlignVertical: 'center',
+    textAlign: 'right',
     position: 'relative',
-    // backgroundColor: 'green',
   }),
   countTextContainer: {
     maxWidth: '98%',
-    // height: '100%',
-    // backgroundColor: 'red',
-    // justifyContent: 'center',
-    // alignItems: 'flex-end',
-    // alignSelf: 'center',
-    // flex: 1,
   },
   countTextShadow: (theme) => ({
     position: 'absolute',

@@ -10,11 +10,9 @@ import {
 } from 'react-native';
 import {CountersContext} from '../state/CountersContext';
 import {withTheme} from 'react-native-elements';
-import {BlurView} from '@react-native-community/blur';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const screenWidth = Math.floor(Dimensions.get('window').width);
-// const eyeWidth = 32;
 
 function Header({navigation, theme}) {
   const {numSelCounters} = useContext(CountersContext);
@@ -33,7 +31,7 @@ function Header({navigation, theme}) {
   const settingsSpin = useRef(new Animated.Value(0)).current;
   const eyeballWidth = useRef(new Animated.Value(4)).current;
   const outlineHeight = useRef(new Animated.Value(15)).current;
-  const blurViewTop = useRef(new Animated.Value(0)).current;
+
   if (numSel === 0) {
     Animated.timing(eyeballWidth, {
       toValue: 4,
@@ -53,13 +51,6 @@ function Header({navigation, theme}) {
 
     Animated.timing(outlineHeight, {
       toValue: 15,
-      useNativeDriver: false,
-      duration: 300,
-      easing: Easing.inOut(Easing.linear),
-    }).start();
-
-    Animated.timing(blurViewTop, {
-      toValue: -300,
       useNativeDriver: false,
       duration: 300,
       easing: Easing.inOut(Easing.linear),
@@ -137,13 +128,6 @@ function Header({navigation, theme}) {
   }
 
   if (numSel >= 1) {
-    Animated.timing(blurViewTop, {
-      toValue: 0,
-      useNativeDriver: false,
-      duration: 300,
-      easing: Easing.inOut(Easing.linear),
-    }).start();
-
     Animated.timing(eyeballWidth, {
       toValue: 12,
       useNativeDriver: false,
@@ -450,7 +434,6 @@ function Header({navigation, theme}) {
       easing: Easing.inOut(Easing.linear),
     }).start();
   }
-  // });
 
   const spin = settingsSpin.interpolate({
     inputRange: [0, 1],
@@ -712,43 +695,17 @@ function Header({navigation, theme}) {
           </TouchableOpacity>
         </View>
       </View>
-      <Animated.View style={[styles.blurViewContainer, {top: blurViewTop}]}>
-        <StatusBar
-          translucent={true}
-          backgroundColor={'rgba(0,0,0,0)'}
-          barStyle="light-content"
-        />
-
-        <BlurView blurType={'light'} style={[styles.blurView]}></BlurView>
-      </Animated.View>
+      <StatusBar
+        translucent={true}
+        backgroundColor={'rgba(0,0,0,0)'}
+        barStyle="light-content"
+      />
     </View>
   );
 }
 
 //rnss
 const styles = StyleSheet.create({
-  blurView: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-    maxHeight: '100%',
-    // backgroundColor: 'rgba(0,0,0,0)',
-  },
-  blurViewContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
-    zIndex: 5,
-    overflow: 'hidden',
-    maxHeight: '100%',
-  },
   container: {
     position: 'absolute',
     top: 0,

@@ -14,6 +14,7 @@ import Card from '../components/Card';
 import HomeActionButtons from '../components/HomeActionButtons';
 import Header from '../components/Header';
 import SectionTitle from '../components/SectionTitle';
+import {BlurView} from '@react-native-community/blur';
 
 import {CountersContext} from '../state/CountersContext';
 import {withTheme} from 'react-native-elements';
@@ -71,6 +72,9 @@ function HomeScreen({navigation, theme}) {
             </View>
           </View>
         </ScrollView>
+        <View style={styles.blurViewContainer}>
+          <BlurView blurType={'light'} style={[styles.blurView]}></BlurView>
+        </View>
         {/* )} */}
         <HomeActionButtons
           navigation={navigation}
@@ -95,6 +99,25 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'repeat',
   },
+  blurViewContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+
+    overflow: 'hidden',
+    height: 90,
+  },
+  blurView: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    top: 0,
+    minHeight: '100%',
+  },
   backRightBtn: {
     alignItems: 'center',
     bottom: 0,
@@ -116,7 +139,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     flexDirection: 'column',
     flex: 1,
-    paddingTop: 90,
+    paddingTop: 100,
   }),
   containerView: (theme) => ({
     position: 'relative',
