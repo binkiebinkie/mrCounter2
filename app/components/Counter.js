@@ -9,11 +9,9 @@ import {
   Dimensions,
 } from 'react-native';
 import {withTheme} from 'react-native-elements';
-// import { TouchableHighlight } from "react-native-gesture-handler";
 import {CountersContext} from '../state/CountersContext';
 import {relativeTimeRounding} from 'moment';
 const screenHeight = Math.floor(Dimensions.get('window').height);
-// const windowHeight = Dimensions.get("window").height;
 
 //rsf
 function Counter({counter, index, theme}) {
@@ -27,10 +25,10 @@ function Counter({counter, index, theme}) {
   const [compWidth, setCompWidth] = useState(0);
   const {title, count, selected, id, incrementAmount} = counter;
 
-  const leftHanded = settings.find((setting) => setting.id === 'leftHanded')
+  const leftHanded = settings.find(setting => setting.id === 'leftHanded')
     .selected;
 
-  const changeCount = (increment) =>
+  const changeCount = increment =>
     setCounters(
       counters.map((counter, i) => {
         if (counter.id !== id) return counter;
@@ -65,7 +63,7 @@ function Counter({counter, index, theme}) {
             height: selLength === 1 ? '50%' : '100%',
           },
         ]}
-        onLayout={(e) => {
+        onLayout={e => {
           const {height, width} = e.nativeEvent.layout;
           setCompHeight(height);
           setCompWidth(width);
@@ -147,7 +145,7 @@ function Counter({counter, index, theme}) {
 
 //rnss
 const styles = StyleSheet.create({
-  buttons: (theme) => ({
+  buttons: theme => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -157,12 +155,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 5,
   }),
-  container: (theme) => ({
+  container: theme => ({
     justifyContent: 'space-between',
     alignItems: 'stretch',
     flex: 1,
   }),
-  count: (theme) => ({
+  count: theme => ({
     backgroundColor: theme.colors.Grey2,
     flex: 1,
     justifyContent: 'center',
@@ -182,7 +180,7 @@ const styles = StyleSheet.create({
     height: 36,
     marginBottom: 5,
   },
-  countInnerContBottom: (theme) => ({
+  countInnerContBottom: theme => ({
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'stretch',
@@ -191,22 +189,23 @@ const styles = StyleSheet.create({
     height: 36,
     width: '100%',
     maxWidth: '100%',
+    borderRadius: 8,
     backgroundColor: theme.colors.ScreenGreen0,
   }),
-  countSquare: (theme) => ({
+  countSquare: theme => ({
     width: 36,
     height: 36,
     backgroundColor: theme.colors.ScreenGreen0,
     borderRadius: 4,
   }),
-  countTitle: (theme) => ({
+  countTitle: theme => ({
     fontSize: 20,
     zIndex: 100,
     backgroundColor: theme.colors.ScreenGreen0,
     flex: 1,
     textAlignVertical: 'center',
   }),
-  countTitleContainer: (theme) => ({
+  countTitleContainer: theme => ({
     zIndex: 100,
     borderRadius: 4,
     backgroundColor: theme.colors.ScreenGreen0,
@@ -219,20 +218,21 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     height: 36,
   }),
-  countText: (theme) => ({
+  countText: theme => ({
     textAlignVertical: 'center',
     textAlign: 'right',
     position: 'relative',
   }),
   countTextContainer: {
     maxWidth: '98%',
+    borderRadius: 4,
   },
-  countTextShadow: (theme) => ({
+  countTextShadow: theme => ({
     position: 'absolute',
-    shadowOffset: {width: 0, height: 6},
-    shadowOpacity: 1,
-    shadowColor: theme.colors.Black,
-    shadowRadius: 12,
+    // shadowOffset: {width: 0, height: 6},
+    // shadowOpacity: 1,
+    // shadowColor: theme.colors.Black,
+    // shadowRadius: 12,
     flex: 1,
     top: 0,
     left: 0,
@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
     elevation: 1,
     backgroundColor: theme.colors.ScreenGreen0,
   }),
-  countTextCornerLeft: (theme) => ({
+  countTextCornerLeft: theme => ({
     position: 'absolute',
     borderBottomWidth: 8,
     borderLeftWidth: 8,
@@ -251,8 +251,9 @@ const styles = StyleSheet.create({
     borderLeftColor: theme.colors.Grey2,
     top: 0,
     left: 0,
+    zIndex: 1009900,
   }),
-  countTextCornerRight: (theme) => ({
+  countTextCornerRight: theme => ({
     position: 'absolute',
     borderTopWidth: 8,
     borderRightWidth: 8,
@@ -260,14 +261,15 @@ const styles = StyleSheet.create({
     borderRightColor: 'transparent',
     borderRightColor: theme.colors.Grey2,
     bottom: 0,
+    zIndex: 1009900,
     right: 0,
   }),
-  incButton: (theme) => ({
+  incButton: theme => ({
     textAlign: 'center',
     textAlignVertical: 'center',
     flex: 1,
   }),
-  thButton: (theme) => ({
+  thButton: theme => ({
     position: 'absolute',
     top: 0,
     left: 0,
@@ -276,7 +278,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     zIndex: 100000,
   }),
-  thButtonContainer: (theme) => ({
+  thButtonContainer: theme => ({
     position: 'relative',
     width: '100%',
     height: '49%',
